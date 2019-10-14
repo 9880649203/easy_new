@@ -1,0 +1,68 @@
+.container input{position:absolute;opacity:0;cursor:pointer}
+@media (min-width: 992px){
+.navbar-expand-lg .navbar-collapse {
+  display:flex !important;
+  float:right;
+ height:1px;
+}
+}
+::ng-deep .mat-paginator-container{
+  align-items: baseline !important; 
+} 
+.m-10{
+margin: 10px;
+}
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+color: #136c7b !important;
+}
+.mat-primary .mat-pseudo-checkbox-checked, .mat-primary .mat-pseudo-checkbox-indeterminate {
+background: #136c7b !important;
+/* color: #ffF; */
+}
+button{
+  background: #03687c !important;
+  }
+::ng-deep .mat-select-arrow {
+width: 0;
+height: 0;
+border-left: 0px solid transparent !important;
+border-right: 0px solid transparent !important;
+border-top: 5px solid;
+margin: 0 4px;
+}
+
+::ng-deep .mat-form-field-infix {
+display: block;
+position: relative;
+flex: auto;
+min-width: 90px !important;
+width: unset !important ;
+}
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+height: 0px !important;
+background-color: white
+}
+::ng-deep .dropdown-list{
+  font-size: 12px;
+  }
+::ng-deep.dropdown-list {
+    position: fixed !important;
+    padding-top: 6px;
+    width: 200px !important;
+    z-index: 9999;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    margin-top: 2px;
+    box-shadow: 0 1px 5px #959595;
+}
+@media screen and(max-width:300px){
+.text{
+  font-size: small;
+} }
+
+
+
+
+
+

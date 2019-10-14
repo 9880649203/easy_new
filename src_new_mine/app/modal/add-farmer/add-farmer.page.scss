@@ -1,0 +1,432 @@
+
+// //radio button css
+// .radiotextsty {
+//   color: #252829;
+//   font-size: 12px;
+// }
+
+// .customradio {
+//   display: block;
+//   position: relative;
+//   padding-left: 24px;
+//   margin-bottom: 0px;
+//   cursor: pointer;
+//   font-size: 12px;
+//   -webkit-user-select: none;
+//   -moz-user-select: none;
+//   -ms-user-select: none;
+//   user-select: none;
+// }
+// .customradio input {
+//   position: absolute;
+//   opacity: 0;
+//   cursor: pointer;
+// }
+
+// .checkmark {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   height: 14px;
+//   width: 14px;
+//   background-color: white;
+//   border-radius: 50%;
+//   border:1px solid #BEBEBE;
+// }
+
+// /* On mouse-over, add a grey background color */
+// .customradio:hover input ~ .checkmark {
+//   background-color: transparent;
+// }
+
+// /* When the radio button is checked, add a blue background */
+// .customradio input:checked ~ .checkmark {
+//   background-color: white;
+//   border:1px solid #BEBEBE;
+// }
+
+// /* Create the indicator (the dot/circle - hidden when not checked) */
+// .checkmark:after {
+//   content: "";
+//   position: absolute;
+//   display: none;
+// }
+
+// /* Show the indicator (dot/circle) when checked */
+// .customradio input:checked ~ .checkmark:after {
+//   display: block;
+// }
+
+// /* Style the indicator (dot/circle) */
+// .customradio .checkmark:after {
+//   top: 2px;
+//   left: 2px;
+//   width: 8px;
+//   height: 8px;
+//   border-radius: 50%;
+//   background: #057b82;
+// }
+
+// .error {
+//   color: rgb(223, 62, 62);
+//   font-size: 11px;
+// }
+// .error1 {
+//   color: rgb(75, 75, 75);
+//   border-bottom: 1px solid #ff0000;
+// }
+// .text-list{
+//   font-size:14px;
+// }
+// .form-content-labels {
+//   font-family: inherit;
+//   font-size: 13px;
+//   font-weight: normal;
+//   font-style: normal;
+//   font-stretch: normal;
+//   line-height: 2.5;
+//   letter-spacing: normal;
+//   text-align: left;
+//   color: #4d4e4e;
+//   color: var(--Black);
+// }
+// .form-required-Field {
+//   font-family: inherit;
+//   font-size: 13px;
+//   font-weight: normal;
+//   font-style: normal;
+//   font-stretch: normal;
+//   line-height: 1.38;
+//   letter-spacing: normal;
+//   text-align: left;
+//   color: #4d4e4e;
+//   color: var(--Black);
+// }
+// input{
+//   font-size: 13px;
+//   height: 30px;
+// }
+// ion-datetime{
+//   height: 30px;
+//   border: 1px solid #cecece;
+//   border-radius: 5px;
+//   padding-top: 0px;
+// }
+// ::ng-deep .select-icon {
+//   padding-top:12px !important
+// }
+// ion-select {
+//   height: 30px;
+//   border: 1px solid #cecece;
+//   border-radius: 5px;
+//   padding-top: 0px;
+//   padding-bottom: 0px;
+// }
+// ::ng-deep .datetime-text{
+//   margin-bottom: 10px !important
+// }
+// ::ng-deep .multiselect-dropdown .dropdown-btn .dropdown-down {
+//   display: inline-block;
+//   top: 10px;
+//   width: 0;
+//   height: 0;
+//   border-top: 5px solid #adadad !important;
+//   border-left: 5px solid transparent !important;
+//   border-right: 5px solid transparent !important;
+//   font-size: 12px;
+//   color: #9a9a9a;
+// }
+
+// ::ng-deep  .multiselect-dropdown .dropdown-btn .dropdown-up {
+//   display: inline-block;
+//    width: 0;
+//   height: 0;
+//   border-bottom: 5px solid #adadad !important;
+//   border-left: 5px solid transparent !important;
+//   border-right: 5px solid transparent !important;
+//   font-size: 12px;
+//   color: #9a9a9a;
+// }
+
+// ::ng-deep .multiselect-dropdown .dropdown-list {
+//   font-size: 12px;
+//   z-index: 100 !important;
+//   position: absolute !important;
+// }
+
+// ::ng-deep  .multiselect-dropdown .dropdown-btn {
+//   font-size: 12px;
+//   color: #a0a0a0;
+//   border: 1px solid #cccccc !important;
+// }
+// ::ng-deep  .multiselect-dropdown {
+//   position: absolute;
+// }
+// ::ng-deep ion-datetime {
+//   margin-bottom: 0px !important;
+// }
+
+// .container {
+//   display: block;
+//   position: relative;
+//   padding-left: 20px;
+//   margin-bottom: 12px;
+//   cursor: pointer;
+//   font-size: 13px;
+//   -webkit-user-select: none;
+//   -moz-user-select: none;
+//   -ms-user-select: none;
+//   user-select: none;
+// }
+
+// /* Hide the browser's default radio button */
+// .container input {
+//   position: absolute;
+//   opacity: 0;
+//   cursor: pointer;
+// }
+// // .bs-datepicker-container{
+// //   position: absolute;
+// // }
+
+// /* Create a custom radio button */
+// .checkmark {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   height: 16px;
+//   width: 16px;
+//   background-color: #eee;
+//   border-radius: 50%;
+// }
+
+// /* On mouse-over, add a grey background color */
+// .container:hover input ~ .checkmark {
+//   background-color: #ccc;
+// }
+
+// /* When the radio button is checked, add a blue background */
+// .container input:checked ~ .checkmark {
+//   background-color: #2196F3;
+// }
+
+// /* Create the indicator (the dot/circle - hidden when not checked) */
+// .checkmark:after {
+//   content: "";
+//   position: absolute;
+//   display: none;
+// }
+
+// /* Show the indicator (dot/circle) when checked */
+// .container input:checked ~ .checkmark:after {
+//   display: block;
+// }
+
+// /* Style the indicator (dot/circle) */
+// .container .checkmark:after {
+//  	top: 4px;
+// 	left: 4px;
+// 	width: 8px;
+// 	height: 8px;
+// 	border-radius: 50%;
+// 	background: white;
+// }
+// .col-form-label::after{
+//   content :' *';
+//   color:red;
+// }
+
+//radio button css
+.radiotextsty {
+  color: #252829;
+  font-size: 12px;
+}
+
+.customradio {
+  display: block;
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 0px;
+  cursor: pointer;
+  font-size: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.customradio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 14px;
+  width: 14px;
+  background-color: white;
+  border-radius: 50%;
+  border:1px solid #BEBEBE;
+}
+
+/* On mouse-over, add a grey background color */
+.customradio:hover input ~ .checkmark {
+  background-color: transparent;
+}
+
+/* When the radio button is checked, add a blue background */
+.customradio input:checked ~ .checkmark {
+  background-color: white;
+  border:1px solid #BEBEBE;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.customradio input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.customradio .checkmark:after {
+  top: 2px;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #057b82;
+}
+.error {
+  color: rgb(223, 62, 62);
+  font-size: 11px;
+}
+.error1 {
+  color: rgb(75, 75, 75);
+  border-bottom: 1px solid #ff0000;
+}
+.text-list{
+  font-size:14px;
+}
+.form-content-labels {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4d4e4e;
+  color: var(--Black);
+}
+.form-required-Field {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4d4e4e;
+  color: var(--Black);
+}
+input{
+  font-size: 13px;
+  height: 30px;
+}
+ion-datetime{
+  height: 30px;
+  border: 1px solid #cecece;
+  border-radius: 5px;
+  padding-top: 0px;
+}
+::ng-deep .select-icon {
+  padding-top:12px !important
+}
+ion-select {
+  height: 30px;
+  border: 1px solid #cecece;
+  border-radius: 5px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+::ng-deep .datetime-text{
+  margin-bottom: 10px !important
+}
+::ng-deep .multiselect-dropdown .dropdown-btn .dropdown-down {
+  display: inline-block;
+  top: 10px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid #adadad !important;
+  border-left: 5px solid transparent !important;
+  border-right: 5px solid transparent !important;
+  font-size: 12px;
+  color: #9a9a9a;
+}
+
+::ng-deep  .multiselect-dropdown .dropdown-btn .dropdown-up {
+  display: inline-block;
+   width: 0;
+  height: 0;
+  border-bottom: 5px solid #adadad !important;
+  border-left: 5px solid transparent !important;
+  border-right: 5px solid transparent !important;
+  font-size: 12px;
+  color: #9a9a9a;
+}
+
+::ng-deep .multiselect-dropdown .dropdown-list {
+  font-size: 12px;
+  z-index: 100 !important;
+  position: absolute !important;
+}
+
+::ng-deep  .multiselect-dropdown .dropdown-btn {
+  font-size: 12px;
+  color: #a0a0a0;
+  border: 1px solid #cccccc !important;
+}
+::ng-deep  .multiselect-dropdown {
+  position: absolute;
+}
+::ng-deep ion-datetime {
+  margin-bottom: 0px !important;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 13px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+// .bs-datepicker-container{
+//   position: absolute;
+// }
+
+
+.col-form-label::after{
+  content :' *';
+  color:red;
+}

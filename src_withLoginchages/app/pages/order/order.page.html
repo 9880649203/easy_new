@@ -1,0 +1,229 @@
+<app-header></app-header>
+<ion-content>
+
+  <ion-fab vertical="top" horizontal="right" class="animated fadeInDown" style="top: 37px;
+  z-index: 100px;position: fixed;">
+    <ion-fab-button color="primary" (click)="togglePopupMenu()"
+      style="height: 55px; font-size: 11px;border-top: 7px solid #045d6f;border-radius: 32px;background-color: #046a7e !important;">
+      <ion-ripple-effect></ion-ripple-effect>
+      <ion-icon name="options"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+  <ion-row>
+    <ion-col size-xs="4" size-sm="4" size-md="2" size-lg="2" size-xl="2">
+      <ion-text class="useFont" color="dark" [class.text]="true" style="padding-left: 5px;line-height: 50px"><b>Orders
+        </b></ion-text>
+    </ion-col>
+    <ion-col size-xs="8" size-sm="8" size-md="10" size-lg="10" size-xl="10" text-right>
+      <!-- <ion-button color="primary" [matMenuTriggerFor]="menu1">
+        EXPORT
+      </ion-button>
+
+      <mat-menu #menu1="matMenu">
+        <span mat-menu-item *ngIf="roleService.viewOrders" (click)="exportOrder()">Order</span>
+        <span mat-menu-item *ngIf="roleService.viewIndent" (click)="exportIndent()">Indent</span>
+      </mat-menu> -->
+
+
+      <!-- <div *ngIf="role_access.role != 'Order Manager'">
+        <ion-button  color="primary"
+          *ngIf="roleBaseAccesService.access_checking('createModifyOrder')" style="text-transform:initial"
+          (click)="addOrder()" title="Add orders">
+          ADD
+        </ion-button>
+
+      </div> -->
+
+      <div *ngIf="role_access.role != 'Order Manager'">
+        <ion-button style="
+          font-weight: 100;float: right" color="primary" *ngIf="roleService.createOrder || roleService.createIndent"
+          style="text-transform:initial" (click)="addOrder()" title="Add orders">
+          ADD
+        </ion-button>
+      </div>
+
+      <!--
+      <div *ngIf="role_access.role == 'Order Manager'" >
+        <ion-button  color="primary"  [matMenuTriggerFor]="menu">
+          Add
+        </ion-button>
+        <mat-menu #menu="matMenu">
+          <span mat-menu-item *ngIf="roleBaseAccesService.access_checking('createModifyOrder')"
+            (click)="addOrder()">Order</span>
+          <span mat-menu-item *ngIf="roleBaseAccesService.access_checking('createModifyIndent')"
+          (click)="addIndent()">Indent</span>
+        </mat-menu>
+      </div> -->
+
+      <div *ngIf="role_access.role == 'Order Manager'">
+        <ion-button style="
+          font-weight: 100;float: right" color="primary" [matMenuTriggerFor]="menu">
+          Add
+        </ion-button>
+        <mat-menu #menu="matMenu">
+          <span mat-menu-item *ngIf="roleService.createOrder" (click)="addOrder()">Order</span>
+          <span mat-menu-item *ngIf="roleService.createIndent" (click)="addIndent()">Indent</span>
+        </mat-menu>
+      </div>
+
+    </ion-col>
+  </ion-row>
+
+
+  <div *ngIf='togglePage'>
+    <mat-tab-group (selectedTabChange)="gettingType($event)">
+      <mat-tab label="Orders" *ngIf="roleService.viewOrders">
+        <!-- <div style="margin-top: -40px" (click)="pageCount()">
+        &nbsp;
+      </div> -->
+        <!-- <ion-row style="margin-top:30px;" class="m-10">
+        <ion-col no-padding size-xs="12" size-sm="12" size-md="10" size-lg="10" size-xl="10">
+          <span style="font-size:14px">Total({{ totalOrderCount }})</span>
+        </ion-col>
+        <ion-col no-padding size-xs="12" size-sm="12" size-md="2" size-lg="2" size-xl="2"> -->
+        <div style="margin-top:10px">
+          <ion-row class="m-10">
+            <ion-col no-padding size="4">
+              <p class="useFont">Total ({{totalCount}})</p>
+            </ion-col>
+            <ion-col no-padding size="8">
+
+
+              <div class="edit-dropdown documentpageSortBy" style="float: right;padding-bottom: 10px">
+                <select class="category dropdown dropbtn" (click)="displayDrop()">
+                  <option style="display:none;">Select Columns to Show:
+                  </option>
+                </select>
+                <div *ngIf="config.opendrop" id="checking" class="checkboxes select">
+                  <label *ngFor="let item of orderHeader" class="container ng-star-inserted">
+                    <input class="col-checkbox jj-text-dropdown" type="checkbox" checked
+                      (click)="hideShowColumns(item)" />{{ item.headerName }}
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+              </div>
+
+            </ion-col>
+            <ag-grid-angular #agGrid style="width: 100%;height:54vh" class="ag-theme-balham"
+              [toolPanelSuppressSideButtons]="true" [gridOptions]="gridOptions" [enableSorting]="true"
+              [rowData]="allrowdata" [enableFilter]="true" [icons]="icons" [enableColResize]="true">
+            </ag-grid-angular>
+          </ion-row>
+
+          <!-- <ion-row>
+            
+            <ion-col size-md="12" size-sm="12">
+              <ion-row row justify-content-end align-items-center>
+                
+                <mat-paginator 
+                  [length]=" totalCount"
+                  [pageSize]="pageSize" 
+                  (page)="getPaginatorData($event)"
+                  [pageSizeOptions]="pageSizeOptions"
+                  [showFirstLastButtons]="true">
+              </mat-paginator>
+              </ion-row>
+            </ion-col>
+
+
+          </ion-row> -->
+
+          <ion-row align-items-center>
+            <ion-col size-md="12" size-lg="12" size-sm="12">
+              <ion-row row justify-content-center align-items-center>
+                <ion-col size-md="12" size-lg="12" size-sm="12">
+                  <mat-paginator [length]=" totalCount" [pageSize]="pageSize" (page)="getPaginatorData($event)"
+                    [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true">
+                  </mat-paginator>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </div>
+
+
+      </mat-tab>
+
+
+
+      <mat-tab label="Indents" (click)="getIndent()" *ngIf="roleService.viewIndent">
+        <div style="margin-top:10px">
+          <ion-row class="m-10">
+            <ion-col no-padding size="4">
+              <p class="useFont">Total ({{totalIndentCount}})</p>
+            </ion-col>
+            <ion-col no-padding size="8">
+
+              <div class="edit-dropdown documentpageSortBy" style="float: right;padding-bottom: 10px">
+                <select class="category dropdown dropbtn" (click)="displayDrop()">
+                  <option style="display:none;">Select Columns to Show:
+                  </option>
+                </select>
+                <div *ngIf="config.opendrop" id="checking" class="checkboxes select">
+                  <label *ngFor="let item of indentHeader" class="container ng-star-inserted">
+                    <input class="col-checkbox jj-text-dropdown" type="checkbox" checked
+                      (click)="hideShowColumns1(item)" />{{ item.headerName }}
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+              </div>
+
+            </ion-col>
+            <ag-grid-angular #agGrid style="width: 100%;height:54vh" class="ag-theme-balham"
+              [toolPanelSuppressSideButtons]="true" [rowData]="indentdata" [enableSorting]="true"
+              [gridOptions]="indGridOptions" [enableFilter]="true" [icons]="icons" [enableColResize]="true">
+            </ag-grid-angular>
+          </ion-row>
+
+
+
+          <ion-row align-items-center>
+            <ion-col size-md="12" size-lg="12" size-sm="12">
+              <ion-row row justify-content-end align-items-center>
+                <ion-col size-md="12" size-lg="12" size-sm="12">
+                  <mat-paginator [length]=" totalIndentCount" [pageSize]="pageSize" (page)="getPaginatorIndData($event)"
+                    [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true">
+                  </mat-paginator>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+</ion-content>
+<div class="popup-menu">
+  <div class="popup-menu-overlay" [ngClass]="{'in': openMenu}"></div>
+  <div class="popup-menu-panel" [ngClass]="{'in': openMenu}">
+    <ion-grid>
+      <div style="margin-top:0px" class="popup-menu-item">
+        <!-- <mat-tab-group  style="margin-bottom:30px; margin-left:12px"> -->
+        <div *ngIf="roleService.viewOrders && orderTab">
+          <ion-row style="float:right;">
+            <ion-col size="12">
+              <ion-icon style="font-size: 25px;cursor: pointer;color: #036479;" name="close"
+                (click)="togglePopupMenu()">
+              </ion-icon>
+            </ion-col>
+          </ion-row>
+          <app-filter></app-filter>
+        </div>
+        <div *ngIf="roleService.viewIndent && indTab ">
+          <ion-row style="float:right;">
+            <ion-col size="12">
+              <ion-icon style="font-size: 25px;cursor: pointer;color: #036479;" name="close"
+                (click)="togglePopupMenu()">
+              </ion-icon>
+            </ion-col>
+          </ion-row>
+          <app-indent-filter></app-indent-filter>
+        </div>
+        <!-- </mat-tab-group> -->
+      </div>
+    </ion-grid>
+  </div>
+</div>

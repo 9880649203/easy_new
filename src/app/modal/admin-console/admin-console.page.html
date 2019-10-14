@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>admin-console</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-grid>
+    <ion-row *ngIf='modalType=="viewAdmin"' style="height:100%;padding:20px">
+      <ion-col col-12 col-md-12 col-lg-4 col-xl-3 style="height:100%">
+        <form novalidate [formGroup]="newProductForm" style="height:100%">
+          <div class="form-group row">
+            <label for="example-search-input" class="col-4 labels_font">Category</label>
+            <div class="col-8">
+              <ng-multiselect-dropdown [placeholder]="'Select category'" [data]="CategoryName"
+                [(ngModel)]="productInform.category_name" formControlName='category_name' [settings]="categorySettings"
+                (onSelect)="onCategorySelect($event)"
+                [class.error2]="!newProductForm.controls.category_name.valid && newProductForm.controls.category_name.dirty">
+              </ng-multiselect-dropdown>
+              <div *ngIf="(newProductForm.get('category_name').hasError('required') )  
+                    && newProductForm.get('category_name').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('category_name').hasError('required') && newProductForm.get('category_name').touched">
+                  please enter Category name
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="example-search-input" class="col-4 labels_font">Products</label>
+            <div class="col-8">
+              <ng-multiselect-dropdown [placeholder]="'Select category'" [data]="productName"
+                [(ngModel)]="productInform.product_name" formControlName='product_name' [settings]="productSettings"
+                (onSelect)="onCategorySelect($event)"
+                [class.error2]="!newProductForm.controls.product_name.valid && newProductForm.controls.product_name.dirty">
+              </ng-multiselect-dropdown>
+              <div *ngIf="(newProductForm.get('product_name').hasError('required') )  
+                    && newProductForm.get('product_name').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('product_name').hasError('required') && newProductForm.get('product_name').touched">
+                  please enter product name
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label for="example-search-input" class="col-4 col-form-label">Unit</label>
+            <div class="col-8">
+
+              <ng-multiselect-dropdown [placeholder]="'Select Unit'" [data]="UnitData" [(ngModel)]="productInform.unit"
+                formControlName='Unit' [settings]="unitSettings " (onSelect)="onUnitSelect($event)"
+                [class.error2]="!newProductForm.controls.Unit.valid && newProductForm.controls.Unit.dirty">
+              </ng-multiselect-dropdown>
+              <div no-lines
+                *ngIf="(newProductForm.get('Unit').hasError('required') ) && newProductForm.get('Unit').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('Unit').hasError('required') && newProductForm.get('Unit').touched">
+                  please select unit
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div style="display: table-cell;text-align:right;padding-top:20px" class="pull-right ">
+            <ion-button class="text-list" color="primary" style="font-size:11px;font-weight:100;"
+              (click)="closeModal()">
+              CANCEL</ion-button>
+          </div>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

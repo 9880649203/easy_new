@@ -1,0 +1,87 @@
+ .no-padding {
+    padding: 0px !important;
+  }
+  // ::ng-deep .dropdown-list {
+  //   position: absolute !important;
+  // }
+.theme-green .bs-datepicker-head {
+  background-color: #347587!important;
+}
+  .round {
+    --border-radius: 0%;
+    --vertical-align: middle;
+    --padding-start: 10px;
+    --padding-end: 10px;
+    height: 2.1em !important;
+  }
+  .text-list {
+    font-size: 14px;
+}
+  .text-list-m{
+    width: 40%;
+  }
+  .form-control{
+    width: 100% !important;
+  }
+  #btn_left, #btn_right, #text{
+    display:inline-block;
+}
+#btn_right{
+    float:right;
+}
+.col-form-label {
+    font-weight: 500;
+    font-size: 14px;
+}
+.labels_font{
+    font-weight: 500;
+    font-size: 14px;
+}
+.col-form-label::after{
+  content :' *';
+  color:red;
+}
+
+
+
+
+.multiselect-dropdown[_ngcontent-c21] .dropdown-btn[_ngcontent-c21] {
+ 
+  font-size: 14px;
+
+}
+
+//datepicker css
+/* remove border between controls */
+.add-on .input-group-btn > .btn {
+  border-left-width: 0;
+  left:-2px;
+  margin-top: -27px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+/* stop the glowing blue shadow */
+.add-on .form-control:focus {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border-color:#cccccc;
+}
+
+.theme-dark-blue .bs-datepicker-head {
+  background-color: #38ad4e !important;
+}
+
+.form-control {
+  font-size: 13px !important;
+}
+::ng-deep .theme-dark-blue .bs-datepicker-head {
+  background-color: #5cb85c !important;
+}
+::ng-deep .table .thead-dark th {
+  color: #fff;
+  background-color: #036479 !important;
+  border-color: #036479 !important;
+}
+::ng-deep .col-form-label {
+  font-size: 14px !important;
+}

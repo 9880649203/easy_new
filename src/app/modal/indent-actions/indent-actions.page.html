@@ -1,0 +1,39 @@
+<!-- <div class="row mr-0 document-actions" style="display:inline-flex;position: absolute;">
+  <div *ngIf="mainParams.editIndent">
+    <fieldset *ngIf="roleBaseAccesService.access_checking('createModifyIndent')" (click)="openEditrole(mainParams,'edit')" title='Edit' class="icon">
+        <ion-icon name="create"></ion-icon>
+    </fieldset> 
+  </div>
+  <div *ngIf="mainParams.viewIndent" class="icon">
+    <fieldset title="View" *ngIf="roleBaseAccesService.access_checking('viewIndentPage')" (click)="openEditrole(mainParams,'view');">
+        <ion-icon name="eye"></ion-icon>
+    </fieldset>
+
+    <fieldset title="Unauthorized" *ngIf="!roleBaseAccesService.access_checking('viewIndentPage')">
+        <ion-icon name="eye"></ion-icon>
+    </fieldset>
+  </div>
+</div> -->
+
+<div class="row mr-0 document-actions" style="display:inline-flex;position: absolute;">
+  <div *ngIf="mainParams.editIndent">
+    <fieldset *ngIf="roleService.editIndent" (click)="openEditrole(mainParams,'edit')" title='Edit' class="icon">
+      <!-- <ion-icon name="create"></ion-icon> -->
+      <mat-icon>edit</mat-icon>
+    </fieldset>
+
+    <!-- <fieldset title="Unauthorized" *ngIf="!roleBaseAccesService.access_checking('createModifyIndent')" class="icon">
+        <ion-icon name="create"></ion-icon>
+    </fieldset> -->
+  </div>
+  <div *ngIf="mainParams.viewIndent" class="icon">
+    <fieldset title="View" (click)="openEditrole(mainParams,'view');">
+        <mat-icon>remove_red_eye</mat-icon>
+      <!-- <ion-icon name="eye"></ion-icon> -->
+    </fieldset>
+
+    <!-- <fieldset title="Unauthorized">
+      <ion-icon name="eye"></ion-icon>
+    </fieldset> -->
+  </div>
+</div>

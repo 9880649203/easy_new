@@ -1,0 +1,662 @@
+<ion-header>
+  <ion-toolbar color="primary" style="color:white">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="11">
+          <ion-title [class.useFont]="true" *ngIf='modalType=="addOrder"' no-margin no-padding>
+            <h4 style="color:#fff">Add Order</h4>
+          </ion-title>
+          <ion-title [class.useFont]="true" *ngIf='modalType=="editOrder"' no-margin no-padding>
+            <h4 style="color:#fff">Edit Order</h4>
+          </ion-title>
+          <ion-title [class.useFont]="true" *ngIf='modalType=="viewOrder"' no-margin no-padding>
+            <h4 style="color:#fff">View Order</h4>
+          </ion-title>
+        </ion-col>
+        <ion-col style="text-align: end;" size="1">
+          <ion-icon style="font-size: 25px;cursor: pointer;color: #036479;" name="close" (click)="modalclose()">
+          </ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content *ngIf="modalType=='addOrder'" padding>
+  <!-- <ion-list> -->
+  <form novalidate [formGroup]="orderForm">
+
+
+    <ion-row class="form-content-labels">
+      <ion-col size="4" class="my-label col-form-label"> Ordered for</ion-col>
+      <ion-col size="8">
+
+        <mat-radio-group aria-label="Select an option">
+          <mat-radio-button class="my-label" value="farmer" *ngIf="role.role == 'Field Agent'"
+            (click)="toggleOrderedFor='farmer'; validateSubmitButton('farmer')">
+            Farmer
+          </mat-radio-button>
+          <mat-radio-button class="my-label" value="agency"
+            *ngIf="role.role == 'Order Manager' || role.role == 'Agency Manager'" (click)="toggleOrderedFor='agency'; validateSubmitButton('agency')">
+            Agency &nbsp;
+          </mat-radio-button>
+          <mat-radio-button class="my-label" *ngIf="role.role == 'Order Manager'" value="external_user"
+            (click)="toggleOrderedFor='external_user'; validateSubmitButton('external_user')">
+            External user
+          </mat-radio-button>
+        </mat-radio-group>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="display:none" *ngIf="role.role == 'Order Manager' || role.role == 'Agency Manager' || role.role == 'Field Agent'"
+      class="form-content-labels">
+      <ion-col class="my-label  col-form-label" size="4">
+        Ordered by
+      </ion-col>
+      <ion-col size="8">
+        <input type="text" readonly [(ngModel)]="role.mobile_no" class="form-control my-label"
+          placeholder="On behalf of" formControlName="on_the_behalf" />
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="toggleOrderedFor=='agency'">
+      <ion-col size="4" class="my-label  col-form-label">
+        On behalf of
+      </ion-col>
+      <ion-col size="8"    style=" font-size: 14px;" >
+        <ng-multiselect-dropdown [placeholder]="'Agency'" required [data]="agencyList" [(ngModel)]="orderModal.ordered_foragency"
+          formControlName="ordered_foragency" [settings]="agencydropdownSettings"
+          [class.error1]="!orderForm.controls.ordered_foragency.valid && orderForm.controls.ordered_foragency.dirty">
+        </ng-multiselect-dropdown>
+
+        <div
+        *ngIf="(orderForm.get('ordered_foragency').hasError('required') ) && orderForm.get('ordered_foragency').touched">
+        <div class="error"
+          *ngIf="(orderForm.get('ordered_foragency').hasError('required') )&& orderForm.get('ordered_foragency').touched">
+          Agency name is empty
+        </div>
+      </div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="toggleOrderedFor=='farmer'">
+      <ion-col size="4" class="my-label">
+        Farmer
+      </ion-col>
+      <ion-col size="8" style=" font-size: 14px;" >
+        <ng-multiselect-dropdown [placeholder]="'Farmer'" [data]="farmerList" [(ngModel)]="orderModal.farmer_id"
+          formControlName="farmer_id" [settings]="farmerdropdownSettings">
+        </ng-multiselect-dropdown>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="toggleOrderedFor=='external_user'">
+      <ion-row>
+        <ion-col size="12" class="my-label col-form-label">On Behalf Of:</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4" class="my-label">
+          Name 
+        </ion-col>
+        <ion-col size="8">
+          <span>
+            <input type="text" [(ngModel)]="orderModal.ordered_forexuser" class="form-control my-label"
+              placeholder="External User" formControlName="ordered_forexuser" 
+              [class.error1]="!orderForm.controls.ordered_forexuser.valid && orderForm.controls.ordered_forexuser.dirty" />
+          </span>
+
+          <div
+          *ngIf="(orderForm.get('ordered_forexuser').hasError('required')  || orderForm.get('ordered_forexuser').hasError('pattern') || orderForm.get('ordered_forexuser').hasError('minlength') || orderForm.get('ordered_forexuser').hasError('maxlength') ) && orderForm.get('ordered_forexuser').touched">
+          <div class="error"
+            *ngIf="(orderForm.get('ordered_forexuser').hasError('required') )&& orderForm.get('ordered_forexuser').touched">
+            Name is empty
+          </div>
+          <div class="error"
+            *ngIf="orderForm.get('ordered_forexuser').hasError('minlength') && orderForm.get('ordered_forexuser').touched">
+            Minimum 4 characters
+          </div>
+          <div class="error"
+            *ngIf="orderForm.get('ordered_forexuser').hasError('maxlength') && orderForm.get('ordered_forexuser').touched">
+            Maximum 30 characters
+          </div>
+          <div class="error"
+            *ngIf="orderForm.get('ordered_forexuser').hasError('pattern') && orderForm.get('ordered_forexuser').touched">
+            Only alphabet characters
+          </div>
+        </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="toggleOrderedFor=='external_user'">
+        <ion-col size="4" class="my-label col-form-label">
+          Mobile number
+        </ion-col>
+        <ion-col size="8">
+          <input type="text" (keypress)="isNumber($event)" [(ngModel)]="orderModal.order_for_mobile"  required oninput="validity.valid||(value='')"
+              class="form-control my-label" placeholder="Mobile Number" 
+              onKeyPress="if(this.value.length==10) return false;" formControlName="order_for_mobile" 
+              [class.error]="!orderForm.controls.order_for_mobile.valid && orderForm.controls.order_for_mobile.dirty" />
+           <div
+          *ngIf="(orderForm.get('order_for_mobile').hasError('required') || orderForm.get('order_for_mobile').hasError('pattern') || 
+          orderForm.get('order_for_mobile').hasError('minlength') || orderForm.get('order_for_mobile').hasError('maxlength')) && orderForm.get('order_for_mobile').touched ">
+          <div class="error"
+            *ngIf="(orderForm.get('order_for_mobile').hasError('required') )&& orderForm.get('order_for_mobile').touched">
+            Mobile number is empty
+          </div>
+          <div class="error"
+            *ngIf="orderForm.get('order_for_mobile').hasError('minlength') && orderForm.get('order_for_mobile').touched">
+            Minimum 10 characters
+          </div>
+          <div class="error"
+            *ngIf="orderForm.get('order_for_mobile').hasError('maxlength') && orderForm.get('order_for_mobile').touched">
+            Maximum 10 characters
+          </div>
+          <div class="error"
+            *ngIf="orderForm.get('order_for_mobile').hasError('pattern') && orderForm.get('order_for_mobile').touched">
+            Use  Only numbers
+          </div>
+        </div>
+      </ion-col>
+      </ion-row>
+    </div>
+
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label col-form-label" size="4">
+        Category
+      </ion-col>
+      <ion-col size="8" style=" font-size: 14px;" >
+        <ng-multiselect-dropdown [placeholder]="'Category'" [data]="categoryList" [(ngModel)]="orderModal.category"
+          [settings]="categorydropdownSettings" (onSelect)="onItemSelect($event, 'category')"
+          formControlName="category"  
+           [class.error1]="!orderForm.controls.category.valid && orderForm.controls.category.dirty">
+        </ng-multiselect-dropdown>
+
+        <div
+        *ngIf="(orderForm.get('category').hasError('required') ) && orderForm.get('category').touched">
+        <div class="error"
+          *ngIf="(orderForm.get('category').hasError('required') )&& orderForm.get('category').touched">
+          Category name is empty
+        </div>
+      </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label col-form-label" size="4" >
+        Product
+      </ion-col>
+      <ion-col size="8" style=" font-size: 14px;" >
+        <ng-multiselect-dropdown [placeholder]="'Product'"  required [data]="products" [(ngModel)]="orderModal.product"
+          [settings]="productdropdownSettings" (onSelect)="onItemSelect($event, 'product')" formControlName="product"
+          [class.error1]="!orderForm.controls.product.valid && orderForm.controls.product.dirty" >
+        </ng-multiselect-dropdown>
+        <div
+        *ngIf="(orderForm.get('product').hasError('required') ) && orderForm.get('product').touched">
+        <div class="error"
+          *ngIf="(orderForm.get('product').hasError('required') )&& orderForm.get('product').touched">
+          Product name is empty
+        </div>
+      </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label col-form-label" size="4">
+        Quantity
+      </ion-col>
+      <ion-col size="8">
+        <input type="number" min="1" [(ngModel)]="orderModal.quantity" class="form-control" placeholder="Enter Quantity"
+          formControlName="quantity" oninput="validity.valid||(value='')" (keyup)="onItemSelect($event, 'quantity')" />
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label" size="4">
+        MRP
+      </ion-col>
+      <ion-col size="8">
+        <input type="number" min="1" oninput="validity.valid||(value='')" [(ngModel)]="orderModal.price" class="form-control" (keyup)="onItemSelect($event, 'mrp')"
+          formControlName="mrp" oninput="validity.valid||(value='')" placeholder="Enter Price" />
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="text-align: right" class="float-right">
+        <span style="color:red; font-size:14px">{{ addmoreprod }}</span>&emsp;
+        <a class="my-label" style="cursor:pointer; color: #175f17;
+        font-size: 15px !important;font-weight: 600;" (click)="addMoreProduct()">Add row</a></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+
+        <ion-grid *ngIf="formdataarray.length">
+          <ion-row style="background: #036479;color:#fff">
+            <ion-col class="my-label" size="4">Category</ion-col>
+            <ion-col class="my-label" size="4">Products</ion-col>
+            <ion-col class="my-label" size="2">Quantity</ion-col>
+            <ion-col class="my-label" size="2">MRP</ion-col>
+          </ion-row>
+
+          <ion-row
+            style="border-bottom: 1px solid #cccaca; border-left: 1px solid #cccaca; border-right: 1px solid #cccaca"
+            *ngFor="let fd of formdataarray">
+            <ion-col class="my-label" size="4"> {{fd.category[0].category_name}} </ion-col>
+            <ion-col class="my-label" size="4"> {{fd.products[0].product_name}} </ion-col>
+            <ion-col class="my-label" size="2"> {{fd.quantity}} </ion-col>
+            <ion-col class="my-label" size="2"> {{fd.price}} </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label" size="4" style="padding-top: 13px">
+        Expected date
+      </ion-col>
+      <ion-col size="8">
+
+        <input style="cursor: pointer" placement="top" name="expecteddate" [(ngModel)]="orderModal.expected_date"
+          type="text" [bsConfig]="datePickerConfig" placeholder="Expected Date" class="form-control"
+          formControlName="expected_date" [minDate]="tomorrow" [bsConfig]="datePickerConfig"
+          value="{{ orderModal.expected_date | date:'dd/MM/yyyy' }}" bsDatepicker />
+
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="toggleOrderedFor=='external_user'" class="form-content-labels">
+      <ion-col class="my-label" size="4">
+        Place
+      </ion-col>
+      <ion-col size="8" style=" font-size: 14px;" >
+
+        <ng-select [items]="place" formControlName="place" placeholder="Select Place" [(ngModel)]="orderModal.place">
+        </ng-select>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row *ngIf="toggleOrderedFor=='external_user'" class="form-content-labels">
+      <ion-col class="my-label" size="4">
+        Pincode
+      </ion-col>
+      <ion-col size="8">
+        <input type="number" oninput="validity.valid||(value='')" [(ngModel)]="orderModal.pincode"
+          onKeyPress="if(this.value.length==6) return false;" class="form-control" placeholder="Enter Pincode"
+          maxlength="6" formControlName="pincode" />
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="toggleOrderedFor=='external_user'">
+      <ion-col size='4'>
+        <ion-label class="my-label"> State </ion-label>
+      </ion-col>
+      <ion-col size="8" style=" font-size: 14px;" >
+        <ng-select [items]="state" formControlName="state" placeholder="Select State" [(ngModel)]="orderModal.state">
+        </ng-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="toggleOrderedFor=='external_user'">
+      <ion-col size='4'>
+        <ion-label class="my-label"> District </ion-label>
+      </ion-col>
+      <ion-col size="8">
+        <ng-select [items]="district" formControlName="district" placeholder="Select District"
+          [(ngModel)]="orderModal.district">
+        </ng-select>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label" size="4">
+        Total price
+      </ion-col>
+      <ion-col size="8">
+        <input type="number" min="1" [(ngModel)]="orderModal.total_order" placeholder="Total Price" class="form-control"
+          formControlName="total_order" disabled />
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="form-content-labels">
+      <ion-col size="12" class="float-right">
+        <!-- <span style="font-size: 14px">{{ orderformsubmitmessage }}</span> -->
+        <ion-button class="text-list float-right my-label" (click)="modalclose()" style="
+        font-weight: 100;float: right" color="primary">
+              Cancel</ion-button>
+        <ion-button class="text-list float-right" (click)="submitOrderForm(orderForm.value)" style="
+    font-weight: 100;float: right" [disabled]="orderForm.invalid" color="primary">
+          Create</ion-button>
+       
+        <p style="height:40px">&nbsp;</p>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>
+
+
+
+<ion-content *ngIf="modalType=='editOrder'" padding>
+  <form novalidate [formGroup]="editOrderForm">
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label col-form-label" size="4">
+        Order ID
+      </ion-col>
+      <ion-col size="8">
+        <input [(ngModel)]="OrderData.order_id" class="form-control" formControlName="order_id" readonly
+          [placeholder]="OrderData.order_id" />
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label col-form-label" size="4">
+        Ordered For
+      </ion-col>
+      <ion-col size="8">
+        <input type="text" [(ngModel)]="OrderData.order_for" class="form-control" placeholder="OrderedFor"
+          formControlName="ordered_for" readonly />
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label col-form-label" size="4">
+        Status
+      </ion-col>
+      <ion-col size="8" style=" font-size: 14px;" >
+        <ng-select [placeholder]="'Status'" required  [items]="status" [(ngModel)]="OrderData.order_status"
+          formControlName="order_status" (change)="setOrderType($event)">
+        </ng-select>{{statusChangeChecker}}
+        <div
+        *ngIf="(editOrderForm.get('order_status').hasError('required') ) && editOrderForm.get('order_status').touched">
+        <div class="error"
+          *ngIf="(editOrderForm.get('order_status').hasError('required') )&& editOrderForm.get('order_status').touched">
+          Select status
+        </div>
+      </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label" size="4">
+        Total price
+      </ion-col>
+      <ion-col size="8">
+        <input type="number" [(ngModel)]="OrderData.order_total" class="form-control" placeholder="Price"
+          formControlName="price" />
+
+      </ion-col>
+    </ion-row>
+    <div>
+
+      <ion-row style="background: #036479;color:#fff">
+        <ion-col class="my-label" size="3">Category</ion-col>
+        <ion-col class="my-label" size="3">Products</ion-col>
+        <ion-col class="my-label" size="2" style="display:none">Unit</ion-col>
+        <ion-col class="my-label" size="2">Quantity</ion-col>
+        <ion-col class="my-label" size="2">Price</ion-col>
+      </ion-row>
+      <ion-grid
+        style="z-index:99999;border-bottom: 1px solid #cccaca; border-left: 1px solid #cccaca; border-right: 1px solid #cccaca"
+        formArrayName="items" *ngFor="let fd of editOrderForm.get('items').controls; let i = index;">
+        <ion-row [formGroupName]="i">
+          <ion-col size="3">
+            <ng-multiselect-dropdown
+              [placeholder]="editOrderForm.controls.items.controls[i].controls.category.value.category_name"
+              [data]="categoryList" [(ngModel)]="editOrderForm.controls.items.controls[i].controls.category.value"
+              [settings]="categorydropdownSettings" (onSelect)="onItemSelect($event, 'category')"
+              formControlName="category" [disabled]="forAdminUpdate">
+            </ng-multiselect-dropdown>
+          </ion-col>
+          <ion-col size="3">
+            <ng-multiselect-dropdown
+              [placeholder]="editOrderForm.controls.items.controls[i].controls.products.value.product_name"
+              [data]="products" [(ngModel)]="editOrderForm.controls.items.controls[i].controls.products.value"
+              [settings]="productdropdownSettings"
+              (onSelect)="onItemSelect1($event, 'product', editOrderForm.controls.items.controls[i].controls.mrp.value)"
+              formControlName="products" [disabled]="forAdminUpdate">
+            </ng-multiselect-dropdown>
+          </ion-col>
+          <ion-col size="2" style="display:none">
+            <ng-multiselect-dropdown [placeholder]="editOrderForm.controls.items.controls[i].controls.unit.value.unit"
+              [data]="unitDropval" [(ngModel)]="editOrderForm.controls.items.controls[i].controls.unit.value"
+              [settings]="dropdownSettings" formControlName="unit" [attr.disabled]="true ? '' : null">
+            </ng-multiselect-dropdown>
+          </ion-col>
+          <ion-col size="2">
+            <input type="number" min="1" [(ngModel)]="editOrderForm.controls.items.controls[i].controls.quantity.value"
+              class="form-control" [placeholder]="editOrderForm.controls.items.controls[i].controls.quantity.value"
+              formControlName="quantity" [attr.disabled]="forAdminUpdate ? '' : null" />
+          </ion-col>
+
+          <ion-col size="2">
+            <input type="number" min="1" [(ngModel)]="editOrderForm.controls.items.controls[i].controls.mrp.value"
+              class="form-control" [placeholder]="editOrderForm.controls.items.controls[i].controls.mrp.value"
+              formControlName="mrp" />
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+    </div>
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label" size="4">
+        Updated by
+      </ion-col>
+      <ion-col size="8">
+        <input type="text" disabled [(ngModel)]="OrderData.updated_by" class="form-control" placeholder="Updated by"
+          formControlName="updated_by" [attr.disabled]="forAdminUpdate ? '' : null" />
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label" size="4">
+        Expected date
+      </ion-col>
+      <ion-col size="8">
+        <input style="cursor: pointer" placement="top" [(ngModel)]="OrderData.expected_date" type="text"
+          placeholder="Expected date" [bsConfig]="datePickerConfig" class="form-control" formControlName="expected_date"
+          [minDate]="tomorrow" bsDatepicker [attr.disabled]="forAdminUpdate ? '' : null" />
+
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label" size="4">
+        Delivered date
+
+      </ion-col>
+      <ion-col size="8">
+
+        <input style="cursor: pointer" placement="top" [(ngModel)]="OrderData.delivered_date" type="text"
+          placeholder="Delivered date" [bsConfig]="datePickerConfig" class="form-control"
+          formControlName="delivered_date" [attr.disabled]="!(OrderData.order_status == 'completed') ? '' : null"
+          [minDate]="tomorrow" bsDatepicker />
+        <!-- <ion-datetime name="expecteddate" placeholder="Delivered Date" displayFormat="DD/MM/YYYY"
+          [(ngModel)]="OrderData.delivered_date" formControlName="delivered_date"></ion-datetime> -->
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size='6'>
+        <ion-label class="my-label">State</ion-label>
+        <input class="inputdate" placeholder="state" [value]="OrderData.state" class="form-control" type="text"
+          disabled />
+
+      </ion-col>
+      <ion-col size='6'>
+        <ion-label class="my-label">District</ion-label>
+        <input class="inputdate" placeholder="District" [value]="OrderData.district" class="form-control" type="text"
+          disabled />
+      </ion-col>
+
+    </ion-row>
+
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label" size="4">
+        Place
+      </ion-col>
+      <ion-col size="8">
+        <input type="text" [value]="OrderData.place" class="form-control" placeholder="Enter Place" disabled />
+        {{OrderData.Place}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label" size="4">
+        Pincode
+      </ion-col>
+      <ion-col size="8">
+        <input type="number" min="111111" [value]="OrderData.pincode" class="form-control" placeholder="Enter Pincode"
+          disabled />
+        <!-- {{OrderData|json}} -->
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="form-content-labels">
+      <ion-col class="my-label" size="4">
+        Notes
+      </ion-col>
+      <ion-col size="8">
+        <input [(ngModel)]="OrderData.comment" class="form-control" formControlName="comment"
+          [placeholder]="OrderData.comment" [attr.disabled]="forAdminUpdate ? '' : null" />
+      </ion-col>
+    </ion-row>
+
+    <span class="my-label" style="color:green"> {{ updateorderstatus }}</span>
+
+    <span class="my-label" style="color:red"><br /> {{ updateButtonMessage }}</span>
+    <ion-button class="text-list float-right" style="font-size: 11px;
+    font-weight: 100;float: right" color="primary" (click)="modalclose()">
+      Cancel</ion-button>&nbsp;
+    <ion-button class="text-list float-right" type="submit" style="font-size: 11px;
+    font-weight: 100;float: right" color="primary" [disabled]="updateButtonStatus"
+      (click)="updateOrder(editOrderForm.value)">
+      Update</ion-button>
+  
+    <p style="height:40px">&nbsp;</p>
+  </form>
+
+</ion-content>
+
+
+<ion-content *ngIf="modalType=='viewOrder'" padding>
+  <!-- <form novalidate [formGroup]="orderForm" *ngFor="let item of editProducts"> -->
+  <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+    <ion-col class="my-label" size="6">
+      Order Id
+    </ion-col>
+    <ion-col class="my-label" size="6">
+      {{OrderData.order_id}}
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+    <ion-col class="my-label" size="6">
+      Order For
+    </ion-col>
+    <ion-col class="my-label" size="6">
+      {{OrderData.order_for}}
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+    <ion-col class="my-label" size="6">
+      Order By
+    </ion-col>
+    <ion-col class="my-label" size="6">
+      {{OrderData.order_by}}
+    </ion-col>
+  </ion-row>
+
+
+  <div>
+
+    <ion-row style="background: #036479;color:#fff;">
+      <ion-col class="my-label" size="3">Category</ion-col>
+      <ion-col class="my-label" size="3">Products</ion-col>
+      <ion-col class="my-label" size="2">Unit</ion-col>
+      <ion-col class="my-label" size="2">Quantity</ion-col>
+      <ion-col class="my-label" size="2">MRP</ion-col>
+    </ion-row>
+
+    <ion-row style="border-bottom: 1px solid #cccaca; border-left: 1px solid #cccaca; border-right: 1px solid #cccaca"
+      *ngFor="let fd of editProducts">
+      <ion-col class="my-label" size="3"> {{ fd.category_name.category_name }}</ion-col>
+      <ion-col class="my-label" size="3"> {{ fd.product_name.product_name }} </ion-col>
+      <ion-col class="my-label" size="2"> {{ fd.unit.unit }} </ion-col>
+      <ion-col class="my-label" size="2"> {{ fd.quantity }} </ion-col>
+      <ion-col class="my-label" size="2"> {{ fd.mrp }} </ion-col>
+    </ion-row>
+  </div>
+
+
+  <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+    <ion-col class="my-label" size="6">
+      Expected Date
+    </ion-col>
+    <ion-col class="my-label" size="6">
+      {{OrderData.expected_date}}
+    </ion-col>
+  </ion-row>
+  <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+    <ion-col class="my-label" size="6">
+      Created Date
+    </ion-col>
+    <ion-col class="my-label" size="6">
+      {{OrderData.created_date}}
+    </ion-col>
+  </ion-row>
+  <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+    <ion-col class="my-label" size="6">
+      Place
+    </ion-col>
+    <ion-col class="my-label" size="6">
+      {{OrderData.place}}
+    </ion-col>
+  </ion-row>
+  <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+    <ion-col class="my-label" size="6">
+      Pincode
+    </ion-col>
+    <ion-col class="my-label" size="6">
+      {{OrderData.pincode}}
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+    <ion-col class="my-label" size="6">
+      State
+    </ion-col>
+    <ion-col class="my-label" size="6">
+      {{OrderData.state}}
+    </ion-col>
+  </ion-row>
+
+
+  <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+    <ion-col class="my-label" size="6">
+      District
+    </ion-col>
+    <ion-col class="my-label" size="6">
+      {{OrderData.district}}
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+    <ion-col class="my-label" size="6">
+      Price
+    </ion-col>
+    <ion-col class="my-label" size="6">
+      {{OrderData.order_total}}
+    </ion-col>
+  </ion-row>
+
+  <div class="pt-2">
+    <ion-button class="text-list float-right" style="font-size: 11px;
+    font-weight: 100;float: right" color="primary" (click)="modalclose()">
+      Cancel</ion-button>
+  </div>
+  <p style="height:40px">&nbsp;</p>
+  <!-- </form> -->
+</ion-content>

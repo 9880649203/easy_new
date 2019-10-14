@@ -1,0 +1,21 @@
+<div class="row mr-0 document-actions" style="display:inline-flex;position: absolute;">
+    <div *ngIf="mainParams.editProduct" class="icon">
+    <fieldset title="Edit" (click)="openEditrole(mainParams,'edit')"  >
+    <ion-icon   *ngIf="roleService.editProduct"  name="create"></ion-icon>
+    </fieldset>
+    <!-- <fieldset title="Edit"   title='Unauthorised' class="icon">
+      <ion-icon name="create"></ion-icon>
+     </fieldset> -->
+    </div>
+    <div *ngIf="mainParams.viewProduct"  class="icon">
+    <!-- <fieldset title="View" (click)="openEditrole(mainParams,'view');">
+    <ion-icon name="eye"  class="secondary" *ngIf="roleService.viewProduct"></ion-icon>
+    </fieldset> -->
+    <fieldset title="View" (click)="openEditrole(mainParams,'view');">
+     <ion-icon name="eye"  class="secondary" ></ion-icon>
+      </fieldset>
+    </div>
+    </div>
+
+ 
+    

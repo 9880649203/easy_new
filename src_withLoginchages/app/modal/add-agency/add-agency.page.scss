@@ -1,0 +1,118 @@
+
+.text-list{
+  font-size:14px;
+}
+.form-content-labels {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4d4e4e;
+  color: var(--Black);
+}
+.form-required-Field {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4d4e4e;
+  color: var(--Black);
+}
+input{
+  font-size: 14px;
+  height: 30px;
+}
+ion-datetime{
+  height: 30px;
+  border: 1px solid #cecece;
+  border-radius: 5px;
+  padding-top: 0px;
+}
+::ng-deep .select-icon {
+  padding-top:12px !important
+}
+ion-select {
+  height: 30px;
+  border: 1px solid #cecece;
+  border-radius: 5px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+::ng-deep .datetime-text{
+  margin-bottom: 10px !important
+}
+::ng-deep .multiselect-dropdown .dropdown-btn .dropdown-down {
+  display: inline-block;
+  top: 10px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid #adadad !important;
+  border-left: 5px solid transparent !important;
+  border-right: 5px solid transparent !important;
+  font-size: 12px;
+  color: #9a9a9a;
+}
+
+::ng-deep  .multiselect-dropdown .dropdown-btn .dropdown-up {
+  display: inline-block;
+   width: 0;
+  height: 0;
+  border-bottom: 5px solid #adadad !important;
+  border-left: 5px solid transparent !important;
+  border-right: 5px solid transparent !important;
+  font-size: 12px;
+  color: #9a9a9a;
+}
+
+::ng-deep .multiselect-dropdown .dropdown-list {
+  font-size: 14px;
+  z-index: 100 !important;
+  position: absolute !important;
+}
+
+::ng-deep  .multiselect-dropdown .dropdown-btn {
+  font-size: 14px;
+  color: #a0a0a0;
+  border: 1px solid #cccccc !important;
+}
+::ng-deep  .multiselect-dropdown {
+  position: absolute;
+}
+::ng-deep ion-datetime {
+  margin-bottom: 0px !important;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+// Hide the browser's default radio button /
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+::ng-deep .col-form-label {
+  font-size: 14px !important;
+}
+.col-form-label::after{
+  content :' *';
+  color:red;
+}

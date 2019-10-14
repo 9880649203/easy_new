@@ -1,0 +1,125 @@
+<!-- <app-sidenav></app-sidenav> -->
+<app-header></app-header>
+<ion-content>
+  <ion-row *ngIf="roleService.viewAgency || roleService.viewRole || roleService.viewProductCategory">
+    <ion-col size-xs="4" size-sm="4" size-md="2" size-lg="2" size-xl="2">
+      <ion-text class="fw700 font-md" color="dark" class="useFont" [class.text]="true"
+        style="padding-left: 5px;line-height: 50px"><b>Admin console</b></ion-text>
+    </ion-col>
+    <ion-col size-xs="8" size-sm="8" size-md="10" size-lg="10" size-xl="10" text-right>
+      <ion-button disabled title="Add role" style="font-size: 11px;font-weight: 100;float:right" color="primary"
+        (click)="AdminConsole()" *ngIf="roleService.createRole">
+        ADD ROLE</ion-button>
+      <ion-button disabled *ngIf="roleService.createProductCategory" title="Add product"
+        style="font-size: 11px;font-weight: 100;float:right" color="primary" (click)="AdminConsole()">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+
+    </ion-col>
+
+  </ion-row>
+  <div *ngIf="!roleService.viewAgency || !roleService.viewRole || !roleService.viewProductCategory">
+    <ion-row no-margin no-padding justify-content-center align-items-center>
+      <ion-col size='12'>
+        <div style="font-size: 17px;color: #036479;">You dont have access to this page !</div>
+      </ion-col>
+    </ion-row>
+  </div>
+  <ion-row *ngIf="roleService.viewAgency || roleService.viewRole || roleService.viewProductCategory">
+    <ion-col size="12">
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Roles and Access Privileges
+            </mat-panel-title>
+
+          </mat-expansion-panel-header>
+
+          <table class="table table-bordered table-condensed" border="1">
+            <thead>
+              <tr>
+                <th scope="col">User</th>
+                <th scope="col">Actions</th>
+                <th scope="col">View</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Create</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let data of admin_arry ">
+              <tr>
+                <td rowspan="14" style="vertical-align: middle;">{{data.name}}</td>
+              </tr>
+              <tr *ngFor="let x of data.access">
+                <td>{{x.name}}</td>
+                <td>
+                  <ion-icon [name]="x.view ? 'checkmark' :'close' " [color]="x.edit ? 'success' :'danger'"
+                    style="font-size: 18px"></ion-icon>
+                </td>
+                <td>
+                  <ion-icon [name]="x.edit ? 'checkmark' :'close' " [color]="x.edit ? 'success' :'danger'"
+                    style="font-size: 18px"></ion-icon>
+                </td>
+                <td>
+                  <ion-icon [name]="x.create ? 'checkmark' :'close' " [color]="x.create ? 'success':'danger'"
+                    style="font-size: 18px"></ion-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Product Categories
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <table class="table table-bordered table-condensed" border="1">
+            <thead>
+              <tr>
+                <th>Users</th>
+                <th>Actions</th>
+                <th>View</th>
+                <th>Edit</th>
+                <th>Create</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let data of admin_arry">
+              <tr>
+                <td rowspan="14" style="vertical-align: center">{{data.name}}</td>
+                <td style="border:0"></td>
+                <td style="border:0"></td>
+                <td style="border:0"></td>
+                <td style="border:0"></td>
+              </tr>
+              <tr *ngFor="let x of data.access">
+                <td>{{x.name}}</td>
+                <td>
+                  <ion-icon [name]="x.view ? 'checkmark' :'close' " [color]="x.edit ? 'success' :'danger'"
+                    style="font-size: 18px"></ion-icon>
+                </td>
+                <td>
+                  <ion-icon [name]="x.edit ? 'checkmark' :'close' " [color]="x.edit ? 'success' :'danger'"
+                    style="font-size: 18px"></ion-icon>
+                </td>
+                <td>
+                  <ion-icon [name]="x.create ? 'checkmark' :'close' " [color]="x.create ? 'success':'danger'"
+                    style="font-size: 18px"></ion-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Other Dropdown Values
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -1,0 +1,62 @@
+<!-- <!-- <div class="row ml-2 document-actions" style="display:inline-flex;position: absolute;">
+    <div *ngIf="roleBaseAccesService.access_checking('acceptOrder') || roleBaseAccesService.access_checking('cancelOrder') || roleBaseAccesService.access_checking('completeOrders')">
+        <fieldset>
+            <input type="checkbox" (click)="pushedOrderId(mainParams, $event)" 
+            [attr.disabled]="mainParams.data.order_status == 'completed' ? '' : null"
+            [title]="'current status '+mainParams.data.order_status" />  
+        </fieldset>      
+    </div>
+    <div *ngIf="mainParams.editOrder">
+        <fieldset *ngIf="roleBaseAccesService.access_checking('createModifyOrder')" (click)="openEditrole(mainParams,'edit')" title='Edit' class="icon">
+             <ion-icon name="create"></ion-icon>
+        </fieldset>
+    </div>
+    
+    <div *ngIf="mainParams.viewOrder" class="icon">
+        <fieldset title="View" *ngIf="roleBaseAccesService.access_checking('viewOrderPage')" (click)="openEditrole(mainParams,'view');">
+            <ion-icon name="eye"></ion-icon>
+        </fieldset>
+        <fieldset *ngIf="!roleBaseAccesService.access_checking('viewOrderPage')" title="Unauthorized">
+                <ion-icon name="eye"></ion-icon>
+        </fieldset>
+    </div>
+</div> -->
+
+
+<!-- <div class="row ml-2 document-actions" style="display:inline-flex;position: absolute;">
+    <div *ngIf="roleService.acceptStatusOrder || roleService.cancelStatusOrder">
+        <fieldset>
+            <input type="checkbox" (click)="pushedOrderId(mainParams, $event)"
+                [attr.disabled]="mainParams.data.order_status == 'Completed' ? '' : null"
+                [title]="'current status '+mainParams.data.order_status" />
+        </fieldset>
+    </div>
+    <div *ngIf="mainParams.editOrder">
+        <fieldset *ngIf="roleService.editOrder && (mainParams.data.order_status == 'Cancelled' || mainParams.data.order_status == 'Completed' || mainParams.data.order_status == 'Accepted' || mainParams.data.order_status == 'Processed')" title='Edit disabled' class="icon">
+           
+            <mat-icon ng-disabled="true">edit</mat-icon>
+        </fieldset>
+        <fieldset *ngIf="roleService.editOrder && (mainParams.data.order_status == 'Created')" title='Edit' (click)="openEditrole(mainParams,'edit')"  class="icon">
+           
+            <mat-icon ng-disabled="true">edit</mat-icon>
+        </fieldset>
+    </div>
+
+    <div  class="icon"> 
+        <fieldset *ngIf="roleService.acceptStatusOrder && (mainParams.data.order_status == 'Created' || mainParams.data.order_status == 'Accepted' || mainParams.data.order_status == 'Processed')" title="Change status" (click)="acceptCancelOrder(mainParams)">          
+                <mat-icon> border_color</mat-icon>
+               
+        </fieldset>      
+        <fieldset *ngIf="roleService.acceptStatusOrder && (mainParams.data.order_status == 'Completed' || mainParams.data.order_status == 'Cancelled')" title="Change disabled">          
+            <mat-icon> border_color</mat-icon>
+            
+    </fieldset>   
+    </div>
+
+    <div *ngIf="mainParams.viewOrder" class="icon">
+        <fieldset title="View" (click)="openEditrole(mainParams,'view');">
+                <mat-icon>remove_red_eye</mat-icon>
+            
+        </fieldset>
+    </div>
+</div> -->

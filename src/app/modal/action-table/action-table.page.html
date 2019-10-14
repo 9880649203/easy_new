@@ -1,0 +1,47 @@
+<div class="row mr-0 document-actions" style="display:inline-flex;position: absolute;">
+  <div *ngIf="mainParams.editManager">
+    <fieldset *ngIf="roleService.editAgencyManager" title="Edit" (click)="openModalUser(mainParams,'editManager')"
+      title='Edit' class="icon">
+      <ion-icon name="create"></ion-icon>
+    </fieldset>
+  </div>
+  <div *ngIf="mainParams.viewManager" class="icon">
+    <fieldset title="View" (click)="openModalUser(mainParams,'viewManager');">
+      <ion-icon name="eye"></ion-icon>
+    </fieldset>
+  </div>
+  <div *ngIf="mainParams.editFieldAgent">
+    <fieldset *ngIf="roleService.editFieldAgent" title="Edit" (click)="openModalUser(mainParams,'editFieldAgent')"
+      title='Edit' class="icon">
+      <ion-icon name="create"></ion-icon>
+    </fieldset>
+  </div>
+  <div *ngIf="mainParams.viewFieldAgent" class="icon">
+    <fieldset title="View" (click)="openModalUser(mainParams,'viewFieldAgent');">
+      <ion-icon name="eye"></ion-icon>
+    </fieldset>
+  </div>
+  <div *ngIf="mainParams.editOther">
+    <fieldset *ngIf="roleService.editOthers" title="Edit" (click)="openModalUser(mainParams,'editOther')" title='Edit'
+      class="icon">
+      <ion-icon name="create"></ion-icon>
+    </fieldset>
+  </div>
+  <div *ngIf="mainParams.viewOther" class="icon">
+    <fieldset title="View" (click)="openModalUser(mainParams,'viewOther');">
+      <ion-icon name="eye"></ion-icon>
+    </fieldset>
+  </div>
+
+  <div *ngIf="mainParams.editFarmer" [ngClass]="{'disable':roleService.editFarmsData}">
+    <fieldset title="Edit" (click)="openModalFarmer(mainParams,'editFarmer')" title='Edit' class="icon"
+      *ngIf="roleService.editFarmsData">
+      <ion-icon name="create" [ngClass]="{'disable':roleService.editFarmsData}"></ion-icon>
+    </fieldset>
+  </div>
+  <div *ngIf="mainParams.viewFarmer" class="icon">
+    <fieldset title="View" (click)="openModalFarmer(mainParams,'viewFarmer');">
+      <ion-icon name="eye"></ion-icon>
+    </fieldset>
+  </div>
+</div>

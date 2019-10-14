@@ -1,0 +1,283 @@
+<app-header></app-header>
+<ion-content>
+  <ion-fab vertical="top" horizontal="right" class="animated fadeInDown" style="top: 37px;
+  z-index: 100px;position: fixed;">
+    <ion-fab-button color="primary" (click)="togglePopupMenu()"
+      style="height: 55px; font-size: 11px;border-top: 7px solid #045d6f;border-radius: 32px;background-color: #046a7e !important;">
+      <ion-ripple-effect></ion-ripple-effect>
+      <ion-icon name="options"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-row>
+    <ion-col size-xs="8" size-sm="8" size-md="8" size-lg="8" size-xl="8">
+      <ion-text class="fw700 font-md" class="useFont" color="dark" [class.text]="true"
+        style="padding-left: 5px;line-height: 50px"><b>Farms data</b></ion-text>
+    </ion-col>
+    <ion-col size-xs="4" size-sm="4" size-md="4" size-lg="4" size-xl="4" text-right>
+      <ion-button *ngIf="roleService.createFarmsData" title="Add farmer's data"
+        style="font-size: 11px;font-weight: 100;float:right" color="primary" (click)="addFarmer()">
+        ADD</ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="m-10">
+    <ion-col no-padding size="4">
+      <span class="useFont">Total ({{rest.farmerListCount}})</span>
+    </ion-col>
+    <ion-col no-padding size="8">
+      <!-- <div>
+        <div class="edit-dropdown documentpageSortBy" style="float: right;">
+          <div class="multiselect">
+            <div class="drop-down">
+              <div class="selectBox" (click)="toggle = !toggle">
+                <select class="jj-dropdown">
+                  <option>Select Columns to Show:</option>
+                </select>
+                <div class="overSelect" id="rdop-list-dropdown1"></div>
+              </div>
+              <div class="checkboxes select" aria-labelledby="rdop-list-dropdown1"
+                [ngClass]="toggle ? 'display-block' : 'display-none'">
+                <div class="all-columns">
+                  <label *ngFor="let item of allHeaderFarmer"
+                    [ngClass]="item.headerName == 'File name' ? 'disable-click default-columns':''"
+                    class="container ng-star-inserted">
+                    <input class="col-checkbox jj-text-dropdown" type="checkbox" checked
+                      (click)="hideShowColumnsFarmer(item)" />{{
+                                    item.headerName }}
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="edit-dropdown documentpageSortBy" style="float: right;padding-bottom: 10px">
+        <select class="category dropdown dropbtn" (click)="displayDrop()">
+          <option style="display:none;">Select Columns to Show:
+          </option>
+        </select>
+        <div *ngIf="config.opendrop" id="checking" class="checkboxes select">
+          <label *ngFor="let item of allHeaderFarmer"
+            [ngClass]="item.headerName == 'File name' ? 'disable-click default-columns':''"
+            class="container ng-star-inserted">
+            <input class="col-checkbox jj-text-dropdown" type="checkbox" checked
+              (click)="hideShowColumnsFarmer(item)" />{{ item.headerName }}
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- <div class="edit-dropdown documentpageSortBy" style="float: right;padding-bottom: 10px">
+        <select class="category dropdown dropbtn" (click)="showCheckboxes()">
+          <option style="display:none;">Select Columns to Show:
+          </option>
+        </select>
+        <div id="checkboxes" class="dropdown-content checkboxes select" style="z-index: 9999;padding: 6px;">
+          <label *ngFor="let item of allHeaderFarmer"
+            [ngClass]="item.headerName == 'File name' ? 'disable-click default-columns':''"
+            class="container ng-star-inserted">
+            <input class="col-checkbox jj-text-dropdown" type="checkbox" checked
+              (click)="hideShowColumnsFarmer(item)" />{{
+                                    item.headerName }}
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div> -->
+    </ion-col>
+    <ag-grid-angular #agGrid style="width: 100%;height:62vh" class="ag-theme-balham " [gridOptions]="gridOptions"
+      [enableSorting]="true" [enableFilter]="true " [enableColResize]="true">
+    </ag-grid-angular>
+  </ion-row>
+  <!-- pagignation -->
+  <!-- pagignation -->
+  <ion-row align-items-end>
+    <ion-col size-md="12" size-lg="6" size-sm="12" offset-lg="6">
+      <mat-paginator [length]=" totalCount" [pageSize]="pageSize" (page)="getPaginatorData($event)"
+        [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true">
+      </mat-paginator>
+    </ion-col>
+
+
+  </ion-row>
+</ion-content>
+<div class="popup-menu">
+  <div class="popup-menu-overlay" [ngClass]="{'in': openMenu}"></div>
+  <div class="popup-menu-panel" [ngClass]="{'in': openMenu}">
+    <ion-grid>
+      <ion-row style="float:right;">
+        <ion-col size="12">
+          <ion-icon style="font-size: 25px;cursor: pointer;color: #036479;" name="close" (click)="togglePopupMenu()">
+          </ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row no-margin no-padding justify-content-center align-items-end style="margin-top: 15px;">
+        <ion-col no-margin no-padding size-xs="3" size-sm="3" size-md="3" size-lg="3" size-xl="3">
+          <mat-form-field>
+            <ion-icon name="pin" style="font-size: 30px;color: #036479" (click)="setAgencyFilter()">
+            </ion-icon>
+            <p class="c-p" style="color: #036479;font-size:12px"><b>District</b></p>
+            <mat-select (openedChange)="openedChangeDistrict($event)" [formControl]="selectDistrictFormControl"
+              multiple>
+              <mat-select-trigger>
+                {{selectDistrictFormControl.value ?'' : ''}}
+                <span *ngIf="selectDistrictFormControl.value?.length > 0" class="additional-selection">
+                </span>
+              </mat-select-trigger>
+              <div class="select-container">
+                <mat-optgroup>
+                  <mat-form-field style="width:100%;">
+                    <input #search autocomplete="off" placeholder="Search" aria-label="Search" matInput
+                      [formControl]="searchDistrictControl">
+                    <button [disableRipple]="true" *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="clearSearch($event)">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </mat-optgroup>
+                <mat-optgroup *ngIf="(filteredDistrict | async).length == 0">
+                  <div>No results found!</div>
+                </mat-optgroup>
+                <mat-option (onSelectionChange)="selectionChange($event,'District')"
+                  *ngFor="let option of filteredDistrict | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </div>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
+        <ion-col no-margin no-padding size-xs="3" size-sm="3" size-md="3" size-lg="3" size-xl="3">
+          <mat-form-field>
+            <ion-icon name="home" style="font-size: 30px;color: #036479" (click)="setAgencyFilter()">
+            </ion-icon>
+            <p class="c-p" style="color: #036479;font-size:12px"><b>Place</b></p>
+            <mat-select (openedChange)="openedChangePlace($event)" [formControl]="selectPlaceFormControl" multiple>
+              <mat-select-trigger>
+                {{selectPlaceFormControl.value ?'' : ''}}
+                <span *ngIf="selectPlaceFormControl.value?.length > 0" class="additional-selection">
+                </span>
+              </mat-select-trigger>
+              <div class="select-container">
+                <mat-optgroup>
+                  <mat-form-field style="width:100%;">
+                    <input #search autocomplete="off" placeholder="Search" aria-label="Search" matInput
+                      [formControl]="searchPlaceControl">
+                    <button [disableRipple]="true" *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="clearSearch($event)">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </mat-optgroup>
+                <mat-optgroup *ngIf="(filteredPlace | async).length == 0">
+                  <div>No results found!</div>
+                </mat-optgroup>
+                <mat-option (onSelectionChange)="selectionChange($event,'Place')"
+                  *ngFor="let option of filteredPlace | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </div>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
+        <ion-col no-margin no-padding size-xs="3" size-sm="3" size-md="3" size-lg="3" size-xl="3">
+          <mat-form-field>
+            <ion-icon name="business" style="font-size: 30px;color: #036479" (click)="setAgencyFilter()">
+            </ion-icon>
+            <p class=" c-p" style="color: #036479;font-size:12px"><b>Agency</b></p>
+            <mat-select (openedChange)="openedChangeAgency($event)" [formControl]="selectAgencyFormControl" multiple>
+
+              <mat-select-trigger>
+                {{selectAgencyFormControl.value ?'' : ''}}
+                <span *ngIf="selectAgencyFormControl.value?.length > 0" class="additional-selection">
+                </span>
+              </mat-select-trigger>
+              <div class="select-container">
+                <mat-optgroup>
+                  <mat-form-field style="width:100%;">
+                    <input #search autocomplete="off" placeholder="Search" aria-label="Search" matInput
+                      [formControl]="searchAgencyControl">
+                    <button [disableRipple]="true" *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="clearSearch($event)">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </mat-optgroup>
+                <mat-optgroup *ngIf="(filteredAgency | async).length == 0">
+                  <div>No results found!</div>
+                </mat-optgroup>
+                <mat-option (onSelectionChange)="selectionChange($event,'Agency')"
+                  *ngFor="let option of filteredAgency | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </div>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
+        <ion-col no-margin no-padding size-xs="1" size-sm="1" size-md="1" size-lg="1" size-xl="1">
+          <mat-form-field>
+            <ion-icon name="people" style="font-size: 30px;color: #036479" (click)="setAgencyFilter()">
+            </ion-icon>
+            <p class=" c-p" style="color: #036479;font-size:12px"><b>Agent</b></p>
+            <mat-select (openedChange)="openedChangeAgent($event)" [formControl]="selectAgentFormControl" multiple>
+
+              <mat-select-trigger>
+                {{selectAgentFormControl.value ?'' : ''}}
+                <span *ngIf="selectAgentFormControl.value?.length > 0" class="additional-selection">
+                </span>
+              </mat-select-trigger>
+              <div class="select-container">
+                <mat-optgroup>
+                  <mat-form-field style="width:100%;">
+                    <input #search autocomplete="off" placeholder="Search" aria-label="Search" matInput
+                      [formControl]="searchAgentControl">
+                    <button [disableRipple]="true" *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="clearSearch($event)">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </mat-optgroup>
+                <mat-optgroup *ngIf="(filteredAgent | async).length == 0">
+                  <div>No results found!</div>
+                </mat-optgroup>
+                <mat-option (onSelectionChange)="selectionChange($event,'Agent')"
+                  *ngFor="let option of filteredAgent | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </div>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="!clearButtonFlag" style="height: 265px;">
+      </ion-row>
+      <ion-row>
+        <ion-col *ngIf="clearButtonFlag" size="12">
+          <!-- <ion-button style="font-size: 11px;font-weight: 100;float:right;" [disabled]="filters.length==0" color="primary"
+        (click)="applyFilter()">
+        APPLY</ion-button> -->
+          <ion-button style="font-size: 11px;font-weight: 100;float:right;" color="primary" (click)="applyFilter()">
+            APPLY</ion-button>
+          <ion-button color="primary" style="float: right;font-size: 11px;font-weight: 100;" (click)="clearFilter()">
+            CLEAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="clearButtonFlag" style="overflow-x: hidden;height: 227px;;overflow-y: auto">
+        <mat-form-field class="w-100">
+          <mat-chip-list #chipList aria-label="Fruit selection">
+            <mat-chip *ngFor="let filter of filters" [selectable]="selectable" [removable]="removable"
+              (removed)="remove(filter)">
+              <b style="color:#036479">{{filter.type}}</b>&nbsp;:&nbsp; {{filter.displayName}}
+              <mat-icon matChipRemove *ngIf="removable">
+                <ion-icon name="close" style="color: #036479"></ion-icon>
+              </mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-form-field>
+      </ion-row>
+
+    </ion-grid>
+  </div>
+</div>

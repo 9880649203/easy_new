@@ -1,0 +1,1002 @@
+<ion-header>
+  <ion-toolbar color="primary" style="color:white">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="font-md" size="11">
+          <ion-title [class.useFont]="true"
+            *ngIf="modalType=='editManager' || modalType=='editFieldAgent' || modalType=='editOther'" no-margin
+            no-padding style="margin-left: 8px " class="text-left">Edit
+            User</ion-title>
+          <ion-title [class.useFont]="true"
+            *ngIf="modalType=='viewManager' || modalType=='viewFieldAgent' || modalType=='viewOther'" no-margin
+            no-padding style="margin-left: 8px" class="text-left">View
+            User</ion-title>
+          <ion-title [class.useFont]="true" *ngIf="modalType=='addManager'" no-margin no-padding
+            style=" margin-left: 8px;" class="text-left">Add
+            User</ion-title>
+        </ion-col>
+        <!-- <div style="padding: 10px 0px 0px 10px;height: 5px;"> -->
+        <ion-col size="1" style="text-align: end;">
+          <ion-icon style="font-size: 25px;cursor: pointer;color: #036479;" name="close" (click)="closeModal()">
+          </ion-icon>
+        </ion-col>
+        <!-- </div> -->
+
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="font-md">
+  <ion-row *ngIf="modalType=='addManager'" class="form-content-labels" style="margin:15px;border-radius: 5px;">
+    <ion-col size=" 4">
+      User Type
+    </ion-col>
+    <ion-col size="8">
+      <ng-multiselect-dropdown [placeholder]="'Select type of user'" [data]="dropdownListUserType"
+        [settings]="dropdownSingleSelection" (onSelect)="setUserType($event)">
+      </ng-multiselect-dropdown>
+    </ion-col>
+  </ion-row>
+
+  <div *ngIf="modalType=='addManager' && userTypeAgency || modalType=='editManager'" style="margin:15px">
+    <form novalidate [formGroup]="newAgencyForm">
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          Agency Name
+        </ion-col>
+        <ion-col size="8">
+          <ng-multiselect-dropdown formControlName="agency_name" [(ngModel)]="userList.agency_name"
+            [placeholder]="'Select agency'" [data]="dropdownListAgency" [settings]="dropdownMultiSelection"
+            (onSelect)="onAgencySelect($event)"
+            [class.error1]="!newAgencyForm.controls.agency_name.valid && newAgencyForm.controls.agency_name.dirty">
+          </ng-multiselect-dropdown>
+          <div
+            *ngIf="(newAgencyForm.get('agency_name').hasError('required') ) && newAgencyForm.get('agency_name').touched">
+            <div class="error"
+              *ngIf="(newAgencyForm.get('agency_name').hasError('required') )&& newAgencyForm.get('agency_name').touched">
+              Agency name is empty
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          Agency's Manager First Name
+        </ion-col>
+        <ion-col size="8">
+          <input type="text" formControlName="first_name" (keyup)="trimValue(this.newAgencyForm.get('first_name'))"
+            [(ngModel)]="userList.first_name" class="form-control" placeholder="Agency's Manager First Name"
+            [class.error1]="!newAgencyForm.controls.first_name.valid && newAgencyForm.controls.first_name.dirty" />
+          <div
+            *ngIf="(newAgencyForm.get('first_name').hasError('required')  || newAgencyForm.get('first_name').hasError('pattern') || newAgencyForm.get('first_name').hasError('minlength') || newAgencyForm.get('first_name').hasError('maxlength') ) && newAgencyForm.get('first_name').touched">
+            <div class="error"
+              *ngIf="(newAgencyForm.get('first_name').hasError('required') )&& newAgencyForm.get('first_name').touched">
+              Manager's first name is empty
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('first_name').hasError('minlength') && newAgencyForm.get('first_name').touched">
+              Minimum 4 characters
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('first_name').hasError('maxlength') && newAgencyForm.get('first_name').touched">
+              Maximum 30 characters
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('first_name').hasError('pattern') && newAgencyForm.get('first_name').touched">
+              Only use alphabet characters
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          Agency's Manager Last Name
+        </ion-col>
+        <ion-col size="8">
+          <input type="text" formControlName="last_name" (keyup)="trimValue(this.newAgencyForm.get('last_name'))"
+            [(ngModel)]="userList.last_name" class="form-control" placeholder="Agency's Manager Last Name"
+            [class.error1]="!newAgencyForm.controls.last_name.valid && newAgencyForm.controls.last_name.dirty" />
+          <div
+            *ngIf="(newAgencyForm.get('last_name').hasError('required') || newAgencyForm.get('last_name').hasError('pattern') || newAgencyForm.get('last_name').hasError('minlength') || newAgencyForm.get('last_name').hasError('maxlength') ) && newAgencyForm.get('last_name').touched ">
+            <div class="error"
+              *ngIf="(newAgencyForm.get('last_name').hasError('required') )&& newAgencyForm.get('last_name').touched">
+              Manager's last name is empty
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('last_name').hasError('minlength') && newAgencyForm.get('last_name').touched">
+              Minimum 4 characters
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('last_name').hasError('maxlength') && newAgencyForm.get('last_name').touched">
+              Maximum 30 characters
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('last_name').hasError('pattern') && newAgencyForm.get('last_name').touched">
+              Only use alphabet characters
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          Mobile Number
+        </ion-col>
+        <ion-col size="8">
+          <input type="text" formControlName="mobile_no" (keyup)="trimValue(this.newAgencyForm.get('mobile_no'))"
+            [(ngModel)]="userList.mobile_no" class="form-control" placeholder="Mobile number"
+            [class.error1]="!newAgencyForm.controls.mobile_no.valid && newAgencyForm.controls.mobile_no.dirty" />
+          <div
+            *ngIf="(newAgencyForm.get('mobile_no').hasError('required') || newAgencyForm.get('mobile_no').hasError('pattern') || newAgencyForm.get('mobile_no').hasError('minlength') || newAgencyForm.get('mobile_no').hasError('maxlength')) && newAgencyForm.get('mobile_no').touched ">
+            <div class="error"
+              *ngIf="(newAgencyForm.get('mobile_no').hasError('required') )&& newAgencyForm.get('mobile_no').touched">
+              Mobile number is empty
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('mobile_no').hasError('minlength') && newAgencyForm.get('mobile_no').touched">
+              Minimum 10 characters
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('mobile_no').hasError('maxlength') && newAgencyForm.get('mobile_no').touched">
+              Maximum 10 characters
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('mobile_no').hasError('pattern') && newAgencyForm.get('mobile_no').touched">
+              Only use numbers
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          Role
+        </ion-col>
+        <ion-col size="8" *ngIf="modalType=='addManager' || modalType=='editManager'">
+          <ng-multiselect-dropdown formControlName="role" [(ngModel)]="userList.role" [placeholder]="'Select role'"
+            [settings]="dropdownSingleSelection" (onSelect)="onRoleSelect($event)" [data]="dropdownListRoleManager"
+            [class.error1]="!newAgencyForm.controls.role.valid && newAgencyForm.controls.role.dirty">
+          </ng-multiselect-dropdown>
+          <div *ngIf="(newAgencyForm.get('role').hasError('required') ) && newAgencyForm.get('role').touched">
+            <div class="error"
+              *ngIf="(newAgencyForm.get('role').hasError('required') )&& newAgencyForm.get('role').touched">
+              Role name is empty
+            </div>
+
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels" *ngIf="modalType=='addManager'">
+        <ion-col size="4" class="col-form-label">
+          Password
+        </ion-col>
+        <ion-col size="8">
+          <input type="password" formControlName="password" (keyup)="trimValue(this.newAgencyForm.get('password'))"
+            [(ngModel)]="userList.password" class="form-control" placeholder="Password"
+            [class.error1]="!newAgencyForm.controls.password.valid && newAgencyForm.controls.password.dirty" />
+          <div
+            *ngIf="(newAgencyForm.get('password').hasError('required') || newAgencyForm.get('password').hasError('minlength') ) && newAgencyForm.get('password').touched ">
+            <div class="error"
+              *ngIf="(newAgencyForm.get('password').hasError('required') )&& newAgencyForm.get('password').touched">
+              Password is empty
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('password').hasError('minlength') && newAgencyForm.get('password').touched">
+              Minimum 6 characters
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          Aadhar Number
+        </ion-col>
+        <ion-col size="8">
+          <input type="text" formControlName="aadhar_no" [(ngModel)]="userList.aadhar_no" class="form-control"
+            placeholder="Aadhar number"
+            [class.error1]="!newAgencyForm.controls.aadhar_no.valid && newAgencyForm.controls.aadhar_no.dirty" />
+          <div
+            *ngIf="(newAgencyForm.get('aadhar_no').hasError('required')  || newAgencyForm.get('aadhar_no').hasError('pattern') || newAgencyForm.get('aadhar_no').hasError('minlength') || newAgencyForm.get('aadhar_no').hasError('maxlength') ) && newAgencyForm.get('aadhar_no').touched">
+            <div class="error"
+              *ngIf="(newAgencyForm.get('aadhar_no').hasError('required') )&& newAgencyForm.get('aadhar_no').touched">
+              Aadhar number is empty
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('aadhar_no').hasError('minlength') && newAgencyForm.get('aadhar_no').touched">
+              Minimum 12 characters
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('aadhar_no').hasError('maxlength') && newAgencyForm.get('aadhar_no').touched">
+              Maximum 12 characters
+
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('aadhar_no').hasError('pattern') && newAgencyForm.get('aadhar_no').touched">
+              Only use numbers
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels ">
+        <ion-col size="12" class="form-check-inline">
+          <ion-col size="4" class="col-form-label ">
+            Gender
+          </ion-col>
+          <label class="customradio">
+            <span class="radiotextsty">Male &nbsp;</span>
+            <input type="radio" name="gender" [checked]="activateMale" (click)="setGender('male')"
+              style="margin-top: -6px;">
+            <span class="checkmark" style="margin-left: 5px;"></span>
+          </label>
+          <label class="customradio">
+            <span class="radiotextsty"> Female &nbsp;</span>
+            <input type="radio" name="gender" [checked]="activateFemale" (click)="setGender('female')"
+              style="margin-top: -6px;">
+            <span class="checkmark" style="margin-left: 5px;"></span>
+          </label>
+          <label class="customradio">
+            <span class="radiotextsty"> Other</span>
+            <input type="radio" name="gender" [checked]="activateOther" (click)="setGender('other')"
+              style="margin-top: -6px;">
+            <span class="checkmark" style="margin-left: 5px;"></span>
+          </label>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          Date of Birth
+        </ion-col>
+        <ion-col size="8" style="cursor: pointer">
+          <input formControlName="dob" [(ngModel)]="userList.dob" placement="top" placement="top"
+            placeholder="Date of Birth" class="form-control" value="{{ userList.dob| date: 'dd/MM/yyyy' }}"
+            autocomplete="off" [bsConfig]="datePickerConfig" bsDatepicker
+            (ngModelChange)="checkDateFormat(userList.dob)"
+            [class.error1]="!newAgencyForm.controls.dob.valid && newAgencyForm.controls.dob.dirty || displayError" />
+          <div
+            *ngIf="(newAgencyForm.get('dob').hasError('required') ) && newAgencyForm.get('dob').touched || displayError">
+            <div class="error"
+              *ngIf="(newAgencyForm.get('dob').hasError('required') )&& newAgencyForm.get('dob').touched ||displayError">
+              please enter valid Date of Birth
+            </div>
+
+          </div>
+          <!-- <span  class="error" *ngIf="displayError">please enter valid date</span> -->
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels" *ngIf="modalType=='editManager'">
+        <ion-col size="12" class="form-check-inline">
+          <ion-col size="4">Status</ion-col>
+          <label class="customradio">
+            <span class="radiotextsty">Activate &nbsp;</span>
+            <input type="radio" name="status" [checked]="activateStatusToggle" (click)="changeStatus('1')"
+              style="margin-top: -6px;">
+            <span class="checkmark" style="margin-left: 5px;"></span>
+          </label>
+          <label class="customradio">
+            <span class="radiotextsty">Deactivate &nbsp;</span>
+            <input type="radio" name="status" [checked]="deactivateStatusToggle" (click)="changeStatus('0')"
+              style="margin-top: -6px;">
+            <span class="checkmark" style="margin-left: 5px;"></span>
+          </label>
+        </ion-col>
+      </ion-row><br>
+      <ion-row class="form-content-labels" style="margin-right: 5px;
+      border-top: 1px solid rgb(193, 193, 193);
+      padding-left: 10px;
+      background: #dedede;
+      border-radius: 5px; border-top: 1px solid rgb(193, 193, 193);padding-right:70px;">
+        Address
+      </ion-row>
+      <ion-row class="form-content-labels" style="margin-left:5px">
+        <ion-col size-xs="4" size-sm="4" size-md="2" size-lg="2" size-xl="2" class="col-form-label">
+          Place
+        </ion-col>
+        <ion-col size-xs="8" size-sm="8" size-md="10" size-lg="10" size-xl="10">
+          <input type="text" formControlName="place" [(ngModel)]="userList.place" class="form-control"
+            placeholder="Enter place" (keyup)="trimValue(this.newAgencyForm.get('place'))"
+            [class.error1]="!newAgencyForm.controls.place.valid && newAgencyForm.controls.place.dirty" />
+          <div
+            *ngIf="(newAgencyForm.get('place').hasError('required')  || newAgencyForm.get('place').hasError('pattern') || newAgencyForm.get('place').hasError('minlength') ) && newAgencyForm.get('place').touched">
+            <div class="error"
+              *ngIf="(newAgencyForm.get('place').hasError('required') )&& newAgencyForm.get('place').touched">
+              Place is empty
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('place').hasError('minlength') && newAgencyForm.get('place').touched">
+              Minimum 4 characters
+            </div>
+            <div class="error"
+              *ngIf="newAgencyForm.get('place').hasError('pattern') && newAgencyForm.get('place').touched">
+              Only use alphabet characters
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+          <ion-row>
+            <ion-col size="4" class="col-form-label">
+              Pin Code
+            </ion-col>
+            <ion-col size="8">
+              <input type="text" formControlName="pincode" (keyup)="trimValue(this.newAgencyForm.get('pincode'))"
+                [(ngModel)]="userList.pincode" class="form-control" placeholder="Enter pincode"
+                [class.error1]="!newAgencyForm.controls.pincode.valid && newAgencyForm.controls.pincode.dirty" />
+              <div
+                *ngIf="(newAgencyForm.get('pincode').hasError('required')  || newAgencyForm.get('pincode').hasError('pattern') || newAgencyForm.get('pincode').hasError('minlength') || newAgencyForm.get('pincode').hasError('maxlength') ) && newAgencyForm.get('pincode').touched">
+                <div class="error"
+                  *ngIf="(newAgencyForm.get('pincode').hasError('required') )&& newAgencyForm.get('pincode').touched">
+                  Pincode is empty
+                </div>
+                <div class="error"
+                  *ngIf="newAgencyForm.get('pincode').hasError('minlength') && newAgencyForm.get('pincode').touched">
+                  Minimum 6 characters
+                </div>
+                <div class="error"
+                  *ngIf="newAgencyForm.get('pincode').hasError('maxlength') && newAgencyForm.get('pincode').touched">
+                  Maximum 6 characters
+                </div>
+                <div class="error"
+                  *ngIf="newAgencyForm.get('pincode').hasError('pattern') && newAgencyForm.get('pincode').touched">
+                  Only use numbers
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+          <ion-row>
+            <ion-col size="4" class="col-form-label">
+              Country
+            </ion-col>
+            <ion-col size="8">
+              <ng-multiselect-dropdown (click)="test()" formControlName="country" [(ngModel)]="userList.country"
+                [placeholder]="'Select country'" [data]="dropdownListCountry" [settings]="dropdownSingleSelection"
+                (onSelect)="onCountrySelect($event)"
+                [class.error1]="!newAgencyForm.controls.country.valid && newAgencyForm.controls.country.dirty">
+              </ng-multiselect-dropdown>
+              <div *ngIf="(newAgencyForm.get('country').hasError('required') ) && newAgencyForm.get('country').touched">
+                <div class="error"
+                  *ngIf="(newAgencyForm.get('country').hasError('required') )&& newAgencyForm.get('country').touched">
+                  Country is empty
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+          <ion-row>
+            <ion-col size="4" class="col-form-label">
+              State
+            </ion-col>
+            <ion-col size="8">
+              <ng-multiselect-dropdown formControlName="state" [(ngModel)]="userList.state"
+                [placeholder]="'Select state'" [data]="dropdownListState" [settings]="dropdownSingleSelection"
+                (onSelect)="onStateSelect($event)"
+                [class.error1]="!newAgencyForm.controls.state.valid && newAgencyForm.controls.state.dirty">
+              </ng-multiselect-dropdown>
+              <div *ngIf="(newAgencyForm.get('state').hasError('required') ) && newAgencyForm.get('state').touched">
+                <div class="error"
+                  *ngIf="(newAgencyForm.get('state').hasError('required') )&& newAgencyForm.get('state').touched">
+                  State is empty
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+          <ion-row>
+            <ion-col size="4" class="col-form-label">
+              District
+            </ion-col>
+            <ion-col size="8">
+              <ng-multiselect-dropdown formControlName="district" [(ngModel)]="userList.district"
+                [placeholder]="'Select district'" [data]="dropdownListDistrict" [settings]="dropdownMultiSelection"
+                (onSelect)="onDistrictSelect($event)"
+                [class.error1]="!newAgencyForm.controls.district.valid && newAgencyForm.controls.district.dirty">
+              </ng-multiselect-dropdown>
+              <div
+                *ngIf="(newAgencyForm.get('district').hasError('required') ) && newAgencyForm.get('district').touched">
+                <div class="error"
+                  *ngIf="(newAgencyForm.get('district').hasError('required') )&& newAgencyForm.get('district').touched">
+                  District is empty
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <br>
+
+      <ion-button style="font-size: 11px;
+      font-weight: 100;float: right" color="primary" (click)="closeModal()">
+        CANCEL</ion-button>&nbsp;&nbsp;&nbsp;
+      <ion-button
+        [disabled]="newAgencyForm.invalid || !userList.agency_name[0] || !userList.role[0] || !userList.country[0] || !userList.state[0] || !userList.district[0]"
+        style="font-size: 11px;
+      font-weight: 100;float: right" *ngIf="modalType=='addManager'" color="primary" (click)="createUserManager()">
+        CREATE</ion-button>
+      <ion-button [disabled]="!newAgencyForm.valid" style=" font-size: 11px; font-weight: 100;float: right"
+        *ngIf="modalType=='editManager'" color="primary" (click)="updateUserManager()">
+        UPDATE</ion-button><br>
+    </form>
+  </div>
+  <div
+    *ngIf="modalType=='addManager' && userTypeFieldAgent || userTypeOther || modalType=='editFieldAgent' || modalType=='editOther'"
+    style="margin:15px">
+    <form novalidate [formGroup]="newUserForm">
+      <!-- <ion-row class="float-center">
+          <ion-col size="12">*Required Field</ion-col>
+        </ion-row> -->
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          First Name
+        </ion-col>
+        <ion-col size="8">
+          <input type="text" formControlName="first_name" (keyup)="trimValue(this.newUserForm.get('first_name'))"
+            [(ngModel)]="userList.first_name" class="form-control" placeholder="First Name"
+            [class.error1]="!newUserForm.controls.first_name.valid && newUserForm.controls.first_name.dirty" />
+          <div
+            *ngIf="(newUserForm.get('first_name').hasError('required')  || newUserForm.get('first_name').hasError('pattern') || newUserForm.get('first_name').hasError('minlength') || newUserForm.get('first_name').hasError('maxlength') ) && newUserForm.get('first_name').touched">
+            <div class="error"
+              *ngIf="(newUserForm.get('first_name').hasError('required') )&& newUserForm.get('first_name').touched">
+              First name is empty
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('first_name').hasError('minlength') && newUserForm.get('first_name').touched">
+              Minimum 4 characters
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('first_name').hasError('maxlength') && newUserForm.get('first_name').touched">
+              Maximum 30 characters
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('first_name').hasError('pattern') && newUserForm.get('first_name').touched">
+              Only use alphabet characters
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          Last Name
+        </ion-col>
+        <ion-col size="8">
+          <input type="text" formControlName="last_name" (keyup)="trimValue(this.newUserForm.get('last_name'))"
+            [(ngModel)]="userList.last_name" class="form-control" placeholder="Last Name"
+            [class.error1]="!newUserForm.controls.last_name.valid && newUserForm.controls.last_name.dirty" />
+          <div
+            *ngIf="(newUserForm.get('last_name').hasError('required') || newUserForm.get('last_name').hasError('pattern') || newUserForm.get('last_name').hasError('minlength') || newUserForm.get('last_name').hasError('maxlength') ) && newUserForm.get('last_name').touched ">
+            <div class="error"
+              *ngIf="(newUserForm.get('last_name').hasError('required') )&& newUserForm.get('last_name').touched">
+              Last name is empty
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('last_name').hasError('minlength') && newUserForm.get('last_name').touched">
+              Minimum 4 characters
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('last_name').hasError('maxlength') && newUserForm.get('last_name').touched">
+              Maximum 30 characters
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('last_name').hasError('pattern') && newUserForm.get('last_name').touched">
+              Only use alphabet characters
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          Mobile Number
+        </ion-col>
+        <ion-col size="8">
+          <input type="text" formControlName="mobile_no" (keyup)="trimValue(this.newUserForm.get('mobile_no'))"
+            [(ngModel)]="userList.mobile_no" class="form-control" placeholder="Mobile number"
+            [class.error1]="!newUserForm.controls.mobile_no.valid && newUserForm.controls.mobile_no.dirty" />
+          <div
+            *ngIf="(newUserForm.get('mobile_no').hasError('required') || newUserForm.get('mobile_no').hasError('pattern') || newUserForm.get('mobile_no').hasError('minlength') || newUserForm.get('mobile_no').hasError('maxlength')) && newUserForm.get('mobile_no').touched ">
+            <div class="error"
+              *ngIf="(newUserForm.get('mobile_no').hasError('required') )&& newUserForm.get('mobile_no').touched">
+              Mobile number is empty
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('mobile_no').hasError('minlength') && newUserForm.get('mobile_no').touched">
+              Minimum 10 characters
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('mobile_no').hasError('maxlength') && newUserForm.get('mobile_no').touched">
+              Maximum 10 characters
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('mobile_no').hasError('pattern') && newUserForm.get('mobile_no').touched">
+              Only use numbers
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          Role
+        </ion-col>
+        <ion-col size="8">
+          <ng-multiselect-dropdown *ngIf="modalType=='editFieldAgent' || userTypeFieldAgent" formControlName="role"
+            [(ngModel)]="userList.role" [placeholder]="'Select role'" [settings]="dropdownSingleSelection"
+            (onSelect)="onRoleSelect($event)" [data]="dropdownListRoleAgent"
+            [class.error1]="!newUserForm.controls.role.valid && newUserForm.controls.role.dirty">
+          </ng-multiselect-dropdown>
+          <ng-multiselect-dropdown *ngIf="modalType=='editOther' || userTypeOther" formControlName="role"
+            [(ngModel)]="userList.role" [placeholder]="'Select role'" [settings]="dropdownSingleSelection"
+            (onSelect)="onRoleSelect($event)" [data]="dropdownListRoleOther"
+            [class.error1]="!newUserForm.controls.role.valid && newUserForm.controls.role.dirty">
+          </ng-multiselect-dropdown>
+          <div *ngIf="(newUserForm.get('role').hasError('required') ) && newUserForm.get('role').touched">
+            <div class="error"
+              *ngIf="(newUserForm.get('role').hasError('required') )&& newUserForm.get('role').touched">
+              Role name is empty
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels" *ngIf="modalType=='addManager'">
+        <ion-col size="4" class="col-form-label">
+          Password
+        </ion-col>
+        <ion-col size="8">
+          <input type="password" formControlName="password" (keyup)="trimValue(this.newUserForm.get('password'))"
+            [(ngModel)]="userList.password" class="form-control" placeholder="Password"
+            [class.error1]="!newUserForm.controls.password.valid && newUserForm.controls.password.dirty" />
+          <div
+            *ngIf="(newUserForm.get('password').hasError('required') || newUserForm.get('password').hasError('minlength') ) && newUserForm.get('password').touched ">
+            <div class="error"
+              *ngIf="(newUserForm.get('password').hasError('required') )&& newUserForm.get('password').touched">
+              Password is empty
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('password').hasError('minlength') && newUserForm.get('password').touched">
+              Minimum 6 characters
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          Aadhar Number
+        </ion-col>
+        <ion-col size="8">
+          <input type="text" formControlName="aadhar_no" (keyup)="trimValue(this.newUserForm.get('aadhar_no'))"
+            [(ngModel)]="userList.aadhar_no" class="form-control" placeholder="Aadhar number"
+            [class.error1]="!newUserForm.controls.aadhar_no.valid && newUserForm.controls.aadhar_no.dirty" />
+          <div
+            *ngIf="(newUserForm.get('aadhar_no').hasError('required')  || newUserForm.get('aadhar_no').hasError('pattern') || newUserForm.get('aadhar_no').hasError('minlength') || newUserForm.get('aadhar_no').hasError('maxlength') ) && newUserForm.get('aadhar_no').touched">
+            <div class="error"
+              *ngIf="(newUserForm.get('aadhar_no').hasError('required') )&& newUserForm.get('aadhar_no').touched">
+              Aadhar number is empty
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('aadhar_no').hasError('minlength') && newUserForm.get('aadhar_no').touched">
+              Minimum 12 characters
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('aadhar_no').hasError('maxlength') && newUserForm.get('aadhar_no').touched">
+              Maximum 12 characters
+
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('aadhar_no').hasError('pattern') && newUserForm.get('aadhar_no').touched">
+              Only use numbers
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size="12" class="form-check-inline">
+          <ion-col size="4" class="col-form-label ">
+            Gender
+          </ion-col>
+          <label class="customradio">
+            <span class="radiotextsty">Male &nbsp;</span>
+            <input type="radio" name="gender" [checked]="activateMale" (click)="setGender('male')"
+              style="margin-top: -6px;">
+            <span class="checkmark" style="margin-left: 5px;"></span>
+          </label>
+          <label class="customradio">
+            <span class="radiotextsty"> Female &nbsp;</span>
+            <input type="radio" name="gender" [checked]="activateFemale" (click)="setGender('female')"
+              style="margin-top: -6px;">
+            <span class="checkmark" style="margin-left: 5px;"></span>
+          </label>
+          <label class="customradio">
+            <span class="radiotextsty"> Other</span>
+            <input type="radio" name="gender" [checked]="activateOther" (click)="setGender('other')"
+              style="margin-top: -6px;">
+            <span class="checkmark" style="margin-left: 5px;"></span>
+          </label>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size="4" class="col-form-label">
+          Date of Birth
+        </ion-col>
+        <ion-col size="8" style="cursor: pointer">
+          <input formControlName="dob" [(ngModel)]="userList.dob" placement="top" type="text"
+            placeholder="Date of Birth" class="form-control" value="{{ userList.dob| date: 'dd/MM/yyyy' }}"
+            [bsConfig]="datePickerConfig" bsDatepicker (ngModelChange)="checkDateFormat(userList.dob)"
+            [class.error1]="!newUserForm.controls.dob.valid && newUserForm.controls.dob.dirty && displayError || displayError" />
+          <div *ngIf="(newUserForm.get('dob').hasError('required') ) && newUserForm.get('dob').touched || displayError">
+            <div class="error"
+              *ngIf="(newUserForm.get('dob').hasError('required') )&& newUserForm.get('dob').touched || displayError">
+              please enter valid date of birth
+            </div>
+          </div>
+          <div *ngIf="(newUserForm.get('dob').hasError('required') ) && newUserForm.get('dob').touched">
+            <div class="error" *ngIf="(newUserForm.get('dob').hasError('required') )&& newUserForm.get('dob').touched">
+              Date of birth is empty
+            </div>
+          </div>
+          <!-- <span *ngIf="displayError">please enter valid date</span> -->
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels" *ngIf="modalType=='editOther' || modalType=='editFieldAgent' ">
+        <ion-col size="12" class="form-check-inline">
+          <ion-col size="4">Status</ion-col>
+          <label class="customradio">
+            <span class="radiotextsty">Activate &nbsp;</span>
+            <input type="radio" name="status" [checked]="activateStatusToggle" (click)="changeStatus('1')"
+              style="margin-top: -6px;">
+            <span class="checkmark" style="margin-left: 5px;"></span>
+          </label>
+          <label class="customradio">
+            <span class="radiotextsty">Deactivate &nbsp;</span>
+            <input type="radio" name="status" [checked]="deactivateStatusToggle" (click)="changeStatus('0')"
+              style="margin-top: -6px;">
+            <span class="checkmark" style="margin-left: 5px;"></span>
+          </label>
+        </ion-col>
+      </ion-row><br>
+      <ion-row class="form-content-labels" style="margin-right: 5px;
+        border-top: 1px solid rgb(193, 193, 193);
+        padding-left: 10px;
+        background: #dedede;
+        border-radius: 5px; border-top: 1px solid rgb(193, 193, 193);padding-right:70px;">
+        Address
+      </ion-row>
+      <ion-row class="form-content-labels" style="margin-left:5px">
+        <ion-col size-xs="4" size-sm="4" size-md="2" size-lg="2" size-xl="2" class="col-form-label">
+          Place
+        </ion-col>
+        <ion-col size-xs="8" size-sm="8" size-md="10" size-lg="10" size-xl="10">
+          <input type="text" formControlName="place" (keyup)="trimValue(this.newUserForm.get('place'))"
+            [(ngModel)]="userList.place" class="form-control" placeholder="Enter place"
+            [class.error1]="!newUserForm.controls.place.valid && newUserForm.controls.place.dirty" />
+          <div
+            *ngIf="(newUserForm.get('place').hasError('required')  || newUserForm.get('place').hasError('pattern') || newUserForm.get('place').hasError('minlength') ) && newUserForm.get('place').touched">
+            <div class="error"
+              *ngIf="(newUserForm.get('place').hasError('required') )&& newUserForm.get('place').touched">
+              Place is empty
+            </div>
+            <div class="error"
+              *ngIf="newUserForm.get('place').hasError('minlength') && newUserForm.get('place').touched">
+              Minimum 4 characters
+            </div>
+            <div class="error" *ngIf="newUserForm.get('place').hasError('pattern') && newUserForm.get('place').touched">
+              Only use alphabet characters
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+          <ion-row>
+            <ion-col size="4" class="col-form-label">
+              Pin Code
+            </ion-col>
+            <ion-col size="8">
+              <input type="text" formControlName="pincode" (keyup)="trimValue(this.newUserForm.get('pincode'))"
+                [(ngModel)]="userList.pincode" class="form-control" placeholder="Enter pincode"
+                [class.error1]="!newUserForm.controls.pincode.valid && newUserForm.controls.pincode.dirty" />
+              <div
+                *ngIf="(newUserForm.get('pincode').hasError('required')  || newUserForm.get('pincode').hasError('pattern') || newUserForm.get('pincode').hasError('minlength') || newUserForm.get('pincode').hasError('maxlength') ) && newUserForm.get('pincode').touched">
+                <div class="error"
+                  *ngIf="(newUserForm.get('pincode').hasError('required') )&& newUserForm.get('pincode').touched">
+                  Pincode is empty
+                </div>
+                <div class="error"
+                  *ngIf="newUserForm.get('pincode').hasError('minlength') && newUserForm.get('pincode').touched">
+                  Minimum 6 characters
+                </div>
+                <div class="error"
+                  *ngIf="newUserForm.get('pincode').hasError('maxlength') && newUserForm.get('pincode').touched">
+                  Maximum 6 characters
+                </div>
+                <div class="error"
+                  *ngIf="newUserForm.get('pincode').hasError('pattern') && newUserForm.get('pincode').touched">
+                  Only use numbers
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+          <ion-row>
+            <ion-col size="4" class="col-form-label">
+              Country
+            </ion-col>
+            <ion-col size="8">
+              <ng-multiselect-dropdown (click)="test()" formControlName="country" [(ngModel)]="userList.country"
+                [placeholder]="'Select country'" [data]="dropdownListCountry" [settings]="dropdownSingleSelection"
+                (onSelect)="onCountrySelect($event)"
+                [class.error1]="!newUserForm.controls.country.valid && newUserForm.controls.country.dirty">
+              </ng-multiselect-dropdown>
+              <div *ngIf="(newUserForm.get('country').hasError('required') ) && newUserForm.get('country').touched">
+                <div class="error"
+                  *ngIf="(newUserForm.get('country').hasError('required') )&& newUserForm.get('country').touched">
+                  Country is empty
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+          <ion-row>
+            <ion-col size="4" class="col-form-label">
+              State
+            </ion-col>
+            <ion-col size="8">
+              <ng-multiselect-dropdown formControlName="state" [(ngModel)]="userList.state"
+                [placeholder]="'Select state'" [data]="dropdownListState" [settings]="dropdownSingleSelection"
+                (onSelect)="onStateSelect($event)"
+                [class.error1]="!newUserForm.controls.state.valid && newUserForm.controls.state.dirty">
+              </ng-multiselect-dropdown>
+              <div *ngIf="(newUserForm.get('state').hasError('required') ) && newUserForm.get('state').touched">
+                <div class="error"
+                  *ngIf="(newUserForm.get('state').hasError('required') )&& newUserForm.get('state').touched">
+                  State is empty
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+          <ion-row>
+            <ion-col size="4" class="col-form-label">
+              District
+            </ion-col>
+            <ion-col size="8">
+              <ng-multiselect-dropdown formControlName="district" [(ngModel)]="userList.district"
+                [placeholder]="'Select district'" [data]="dropdownListDistrict" [settings]="dropdownMultiSelection"
+                (onSelect)="onDistrictSelect($event)"
+                [class.error1]="!newUserForm.controls.district.valid && newUserForm.controls.district.dirty">
+              </ng-multiselect-dropdown>
+              <div *ngIf="(newUserForm.get('district').hasError('required') ) && newUserForm.get('district').touched">
+                <div class="error"
+                  *ngIf="(newUserForm.get('district').hasError('required') )&& newUserForm.get('district').touched">
+                  District is empty
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <br>
+
+      <ion-button style="font-size: 11px;
+        font-weight: 100;float: right" color="primary" (click)="closeModal()">
+        CANCEL</ion-button>&nbsp;&nbsp;&nbsp;
+      <ion-button
+        [disabled]="newUserForm.invalid || !userList.role[0] || !userList.country[0] || !userList.state[0] || !userList.district[0]"
+        style="font-size: 11px;
+        font-weight: 100;float: right" *ngIf="modalType=='addManager'" color="primary" (click)="createUserManager()">
+        CREATE</ion-button>
+      <ion-button [disabled]="!newUserForm.valid" style=" font-size: 11px; font-weight: 100;float: right"
+        *ngIf="modalType=='editFieldAgent' || modalType=='editOther'" color="primary" (click)="updateUserManager()">
+        UPDATE</ion-button><br>
+    </form>
+  </div>
+  <div *ngIf="modalType=='viewManager' || modalType=='viewFieldAgent' || modalType=='viewOther' " style="padding:15px;">
+    <div *ngIf="modalType=='viewManager'">
+      <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+        <ion-col size="6">
+          AM Id
+        </ion-col>
+        <ion-col size="6">
+          {{userList.uid}}
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+        <ion-col size="6" class="col-form-label">
+          Agency Name
+        </ion-col>
+        <ion-col size="6">
+          {{userList.agency_name}}
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+        <ion-col size="6" class="col-form-label">
+          Parent Agency Name
+        </ion-col>
+        <ion-col size="6">
+          {{userList.parentAgency_name}}
+        </ion-col>
+      </ion-row> -->
+      <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+        <ion-col size="6" class="col-form-label">
+          Agency's Manager First Name
+        </ion-col>
+        <ion-col size="6">
+          {{userList.first_name}}
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+        <ion-col size="6" class="col-form-label">
+          Agency's Manager Last Name
+        </ion-col>
+        <ion-col size="6">
+          {{userList.last_name}}
+        </ion-col>
+      </ion-row>
+    </div>
+    <div *ngIf="modalType=='viewFieldAgent' || modalType=='viewOther' ">
+      <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca" *ngIf="modalType=='viewFieldAgent'">
+        <ion-col size="6" class="col-form-label">
+          FA Id
+        </ion-col>
+        <ion-col size="6">
+          {{userList.uid}}
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca" *ngIf="modalType=='viewOther' ">
+        <ion-col size="6" class="col-form-label">
+          User Id
+        </ion-col>
+        <ion-col size="6">
+          {{userList.uid}}
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+        <ion-col size="6" class="col-form-label">
+          Agency Name
+        </ion-col>
+        <ion-col size="6">
+          {{userList.agency_name}}
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+        <ion-col size="6" class="col-form-label">
+          First Name
+        </ion-col>
+        <ion-col size="6">
+          {{userList.first_name}}
+        </ion-col>
+      </ion-row>
+      <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+        <ion-col size="6" class="col-form-label">
+          Last Name
+        </ion-col>
+        <ion-col size="6">
+          {{userList.last_name}}
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+      <ion-col size="6" class="col-form-label">
+        Mobile Number
+      </ion-col>
+      <ion-col size="6">
+        {{userList.mobile_no}}
+      </ion-col>
+    </ion-row>
+    <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+      <ion-col size="6" class="col-form-label">
+        Role
+      </ion-col>
+      <ion-col size="6">
+        {{userList.role}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+      <ion-col size="6" class="col-form-label">
+        Aadhar Number
+      </ion-col>
+      <ion-col size="6">
+        {{userList.aadhar_no}}
+      </ion-col>
+    </ion-row>
+    <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+      <ion-col size="6" class="col-form-label">
+        Gender
+      </ion-col>
+      <ion-col size="6">
+        {{userList.gender}}
+      </ion-col>
+    </ion-row>
+    <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+      <ion-col size="6" class="col-form-label">
+        Date of Birth
+      </ion-col>
+      <ion-col size="6">
+        {{userList.dob}}
+      </ion-col>
+    </ion-row>
+    <ion-row class="form-content-labels">
+      <ion-col size="6">
+        Status
+      </ion-col>
+      <ion-col size="6">
+        {{userList.status}}
+      </ion-col>
+    </ion-row><br>
+    <ion-row class="form-content-labels" style="margin-right: 5px;
+    border-top: 1px solid rgb(193, 193, 193);
+    padding-left: 10px;
+    background: #dedede;
+    /* color: white; */
+    border-radius: 5px;;padding-right:70px;">
+      Address
+    </ion-row>
+    <ion-row class="form-content-labels" style="margin-left:5px; border-bottom: 1px solid #cccaca">
+      <ion-col size="2" class="col-form-label">
+        Place
+      </ion-col>
+      <ion-col size="10">
+        {{userList.place}}
+      </ion-col>
+    </ion-row>
+    <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+      <ion-col size='6'>
+        <ion-row>
+          <ion-col size="4" class="col-form-label">
+            Pin Code
+          </ion-col>
+          <ion-col size="8">
+            {{userList.pincode}}
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size='6'>
+        <ion-row>
+          <ion-col size="4" class="col-form-label">
+            Country
+          </ion-col>
+          <ion-col size="8">
+            {{userList.country}}
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row class="form-content-labels" style="border-bottom: 1px solid #cccaca">
+      <ion-col size='6'>
+        <ion-row>
+          <ion-col size="4" class="col-form-label">
+            State
+          </ion-col>
+          <ion-col size="8">
+            {{userList.state}}
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size='6'>
+        <ion-row>
+          <ion-col size="4" class="col-form-label">
+            District
+          </ion-col>
+          <ion-col size="8">
+            {{userList.district}}
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row><br><br>
+
+    <ion-button style="font-size: 11px;
+    font-weight: 100;float: right" color="primary" (click)="closeModal()">
+      CLOSE</ion-button>
+
+    <!-- </form> -->
+  </div>
+
+</ion-content>

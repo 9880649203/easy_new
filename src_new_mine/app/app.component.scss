@@ -1,0 +1,82 @@
+.disable{
+  cursor: not-allowed
+}
+:host {
+    ion-content {
+        // --background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+        --background: linear-gradient(135deg, #036479, #036479);
+    }
+
+    ion-list {
+        &.list-md {
+            padding: 0;
+        }
+    }
+}
+
+/* AG-Grid CSS Starts Below */
+
+.ag-theme-balham .ag-header-cell-resize {
+    z-index: 0 !important;
+  }
+
+  .ag-theme-balham .ag-icon-desc {
+    width: 0;
+    height: 0;
+    /*<<tochange the descending icon for sort>>*/
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #444;
+  }
+
+  .ag-theme-balham .ag-icon-asc {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    /* <<to change the ascending icon for sort>> */
+    border-right: 6px solid transparent;
+    border-bottom: 8px solid #444;
+    background-position: top;
+  }
+
+  .ag-cell-focus,
+  .ag-cell-no-focus {
+    /* <<so that the cell doesnt get a border on click>> */
+    border: none !important;
+  }
+
+  .ag-theme-balham .ag-header-cell-label
+
+  /* { */
+  span {
+    height: auto;
+  }
+
+  /* } */
+
+  .ag-cell:focus {
+    border: none !important;
+    outline: none;
+  }
+
+  .ag-theme-balham .ag-header {
+    font-size: 13px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.38;
+    letter-spacing: normal;
+    color: #070707 !important;
+    height: 35px !important;
+    background: var(--White);
+    background: #FFFFFF;
+  }
+
+  .ag-theme-balham .ag-header-row {
+    height: 35px !important;
+    /* <<properties of header row>> */
+  }
+  .scroll-content { 
+    padding-bottom: 0 !important; 
+ }
+

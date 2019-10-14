@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="11">
+          <ion-title>Change status</ion-title>
+        </ion-col>
+        <ion-col size="1">
+          <ion-icon style="font-size: 25px;cursor: pointer;float:right; color: #036479;" name="close"
+            (click)="closeModal()">
+          </ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form novalidate>
+    <table class="table table-striped table-bordered table-sm">
+      <thead>
+        <tr>
+          <th class="my-label" style="text-align:center" scope="col">Order Id</th>
+          <th class="my-label" style="text-align:center" scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="!idStatus.length">
+          <td colspan="4" style="color:red">Please select order to change status</td>
+        </tr>
+        <tr *ngFor="let ordrSts of idStatus" class="table-success ellipsis">
+          <td class="my-label" style="text-align:center"> {{ ordrSts.order_id }} </td>
+          <!-- <td class="my-label"> {{ ordrSts.order_by }} </td>
+  <td class="my-label"> {{ ordrSts.order_for }}</td> -->
+          <td class="my-label" style="text-align:center"> {{ ordrSts.order_status }}
+            <!-- <ng-select name="order_status" [placeholder]="'Status'" [items]="status"
+  [(ngModel)]="ordrSts.order_status"
+  >
+  </ng-select> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="text-align: center; font-size:13px;">{{ successfullUpdate }}</div>
+    <ion-row>
+      <ion-col class="float-right" size-md="6" size-sm="12">
+        <ng-select name="order_status" [placeholder]="'Status'" [items]="status" (change)="setOrderType($event)"
+          [(ngModel)]="new_order_status">
+        </ng-select> 
+        <!-- <select name="order_status" [placeholder]="'Status'" [(ngModel)]="new_order_status" (change)="setOrderType($event)">
+           <option *ngFor="let sts of status">{{ sts }}</option>
+        </select> -->
+      </ion-col>
+      <ion-col class="float-right" size-md="6" size-sm="12">
+        <!-- <ion-button (click)="closeModal()">Cancel</ion-button>&nbsp; -->
+        <ion-button [disabled]="!checksimilarity || current_status == new_order_status" (click)="submitOrderForm()">
+          Update</ion-button><br />
+        
+      </ion-col>
+      <ion-col size-md="12" size-sm="12">
+          {{statusChangeChecker}}<br/>
+        <span style="color:red" *ngIf="!checksimilarity"> Only similar orders-status of order can be update
+          together</span>
+      </ion-col>
+    </ion-row>
+  </form>
+  <p style="height:40px">&emsp;</p>
+  <!-- <p *ngFor="let i of idStatus"> {{ i.order_id }} -- {{ i.order_status }} </p> -->
+</ion-content>

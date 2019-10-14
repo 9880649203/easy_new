@@ -1,0 +1,59 @@
+<ion-row>
+  <ion-col size-xs="12" size-sm="12" size-md="8" size-lg="8" size-xl="8">
+    <ion-buttons class="onHover">
+      <ion-button disabled shape="round" color="light" (click)="myAccount()" style="font-size: 18px;">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+      <ion-text class="fw700 onHover" style="font-size: 13px;color: white">
+        My Account</ion-text>
+    </ion-buttons>
+
+  </ion-col>
+</ion-row>
+<ion-row no-margin no-padding justify-content-center align-items-center>
+  <ion-col size="10">
+    <ion-text class="fw700" style="font-size: 13px;color: white"><b>Name</b> :
+      {{loggedInUser.first_name +'&nbsp;'+loggedInUser.last_name}}</ion-text>
+  </ion-col>
+</ion-row>
+<ion-row no-margin no-padding justify-content-center align-items-center>
+  <ion-col size="10">
+    <ion-text class="fw700" style="font-size: 13px;color: white"><b>Role</b> :
+      {{loggedInUser.role}}</ion-text>
+  </ion-col>
+</ion-row>
+<ion-row>
+  <ion-col size="12">
+    <ion-button style="font-size: 11px;font-weight: 100;float:right" color="primary" (click)="resetPassword()">RESET
+      PASSWORD
+    </ion-button>
+    <ion-button style="font-size: 11px;font-weight: 100;float:right" color="primary" (click)="logout()">LOGOUT
+    </ion-button>
+  </ion-col>
+</ion-row>
+<!-- <ion-list-header color="dark">
+  <ion-label class="fw700">Settings</ion-label>
+</ion-list-header> -->
+
+<!-- <ion-item color="primary" class="text-10">
+      <ion-icon name="mail" color="light"></ion-icon>
+      <ion-label>New Offer 25% OFF</ion-label>
+    </ion-item> -->
+<!--
+<ion-item color="light">
+  <ion-label class="fw700 font-md"><b>Name</b> : {{loggedInUser.first_name +'&nbsp;'+loggedInUser.last_name}}
+  </ion-label>
+</ion-item>
+<ion-button expand="full" style="font-size: 11px;" (click)="logout()">LOGOUT</ion-button> -->
+
+<!-- <ion-item color="light" class="text-10">
+    <ion-icon name="mail-open" color="primary"></ion-icon>
+    <ion-label>New Offer 10% OFF by month!</ion-label>
+  </ion-item>
+
+  <ion-item color="primary" class="text-10">
+    <ion-icon name="mail" color="light"></ion-icon>
+    <ion-label>New Offer 35% OFF</ion-label>
+  </ion-item> -->
+
+<!-- </ion-list> -->

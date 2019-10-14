@@ -1,0 +1,19 @@
+.disable{
+  cursor: not-allowed
+}
+:host {
+    ion-content {
+          --background: linear-gradient(135deg, #036479, #036479);
+    }
+
+    ion-list {
+        &.list-md {
+            padding: 0;
+        }
+    }
+}
+
+  .scroll-content { 
+    padding-bottom: 0 !important; 
+ }
+

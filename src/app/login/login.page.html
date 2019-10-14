@@ -1,0 +1,85 @@
+<ion-content>
+  <ion-grid class="background" style="background-image:url('./assets/img/background.jpg');">
+    <div class="container">
+      <div class="d-flex justify-content-center h-100">
+        <div class="card">
+          <div class="card-header text-center" style="background-color:#036479">
+            <img src="./assets/img/logo.png" style="width: 51%;" />
+          </div>
+          <div class="card-body">
+            <form novalidate [formGroup]="loginform">
+              <div class="input-group form-group">
+
+                <div class="input-group-prepend">
+                  <span>
+                    <ion-icon style=" font-size: 16px;" name="person" item-start>
+                    </ion-icon>
+                  </span>
+                </div>
+                <input id="field" required type="text" autocomplete="off" class="form-control" placeholder="User Id"
+                  [(ngModel)]="userData.uid" formControlName="uid"
+                  [class.error1]="!loginform.controls.uid.valid && loginform.controls.uid.dirty" />
+              </div>
+
+              <div class="input-group form-group">
+                <div class="input-group-prepend">
+                  <span>
+                    <ion-icon name="lock" style=" font-size: 16px;" item-start>
+                    </ion-icon>
+                  </span>
+                </div>
+                <input id="uid" class="form-control" autocomplete="off" placeholder="Password" type="password"
+                  [(ngModel)]="userData.password" formControlName="password"
+                  [class.error1]="!loginform.controls.password.valid && loginform.controls.password.dirty" />
+
+              </div>
+              <span *ngIf="noDetails">
+                <div class="error"
+                  *ngIf=" loginform.get('uid').required || loginform.get('password').required||loginform.get('uid').untouched || loginform.get('password').touched || loginform.get('password').touched || loginform.get('password').untouched || loginform.get('uid').dirty || loginform.get('password').dirty || loginform.get('uid').pristine || loginform.get('uid').pristine ">
+                  <span class="err font-md"> Invalid Username or Password</span>
+                </div>
+              </span>
+              <span *ngIf="userData.uid !=='' && userData.password !== ''">
+                <span *ngIf="message " class="err font-md">
+                  Invalid credentials for {{userData.uid}}
+                </span>
+              </span>
+              <!--
+              <div class="row align-items-center remember pt-4" style="font-weight: 700">
+                <input type="radio" name="gender" [checked]="toggleFA" (click)="setUserType('Field Agent')"
+                  style="margin-top: -6px;"><b>Field Agent</b>
+                <input type="radio" name="gender" [checked]="toggleOther" (click)="setUserType('Other')"
+                  style="margin-top: -6px;"><b>Other</b>
+              </div> -->
+
+              <!-- <div class="form-group pt-4">
+                <input type="submit" (click)="login(data)" value="Login" class="btn float-right login_btn">
+              </div> -->
+              <ion-row>
+                <ion-col size="6">
+                  <div class="d-flex justify-content-left">
+                    <a  style="font-size: 14px;
+                          color: #f9f9f9; cursor: pointer;
+                          font-weight: bold;">Forgot password?</a>
+                  </div>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-button style="font-size: 13px" color="primary" (click)="login()">
+                    LOGIN</ion-button>
+                </ion-col>
+              </ion-row>
+
+            </form>
+          </div>
+          <!-- <div class="card-footer">
+            <div class="d-flex justify-content-center">
+              <a (click)="forgotPass()" style="font-size: 13px;
+              color: #f9f9f9; cursor: pointer;
+              font-weight: bold;">Forgot your password?</a>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </ion-grid>
+</ion-content>

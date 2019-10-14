@@ -1,0 +1,45 @@
+
+.form-content-labels {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4d4e4e;
+  color: var(--Black);
+}
+.form-required-Field {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4d4e4e;
+  color: var(--Black);
+}
+input{
+  font-size: 13px;
+  height: 30px;
+}
+.resetPwd{
+  color: #047084 !important;
+  font-weight: 700;
+}
+.resetPwd:hover{
+  color: #0a5866 !important;
+  text-decoration: underline;
+  cursor: pointer;
+}
+ion-icon:hover{
+  cursor: pointer;
+}
+ion-icon{
+   margin-left:10px;
+   font-size: 16px;
+}

@@ -1,0 +1,325 @@
+<app-header>
+
+</app-header>
+<ion-content>
+  <ion-row>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-text class="fw700 font-md pt-3" color="dark"  class="useFont" style="padding-left: 5px;"><b>Dashboard</b></ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row style="margin-top:20px">
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6" class="graph">
+      <div class="card card-chart">
+        <div class="card-header card-header-success card-header-1">
+          <canvas #chart1 baseChart [data]="chartData1" [colors]="myColors" [labels]="chartLabels1" [chartType]="chartType1"
+            [options]="chartOptions1" [plugins]="chartPlugins1" [legend]="chartLegend1">
+          </canvas>
+        </div>
+        <div class="card-body">
+          <ion-row no-margin no-padding justify-content-center align-items-end>
+            <ion-col size="5" no-margin no-padding>
+              <mat-form-field appearance="outline" class="mt">
+                <mat-label [class.fontStyl]="true">Select Area Type</mat-label>
+                <mat-select [(ngModel)]="selectedChart1AreaValue">
+                  <mat-option (click)="selectedChart1Area(option)" *ngFor="let option of chartOptionToSelectArea"
+                    [value]="option">
+                    {{option}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="5" no-margin no-padding>
+              <mat-form-field appearance="outline" class="mt">
+                <mat-label [class.fontStyl]="true">Select Chart Type</mat-label>
+                <mat-select [(ngModel)]="selectedChart1Value">
+                  <mat-option (click)="selectedChart1(option)" *ngFor="let option of chartOptionToSelectSingleData"
+                    [value]="option">
+                    {{option}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="footer">
+          <p class="text-left my-0" style="font-size: 16px;padding-top: 10px;">
+            Total order amount as per the area
+          </p>
+        </div>
+      </div>
+    </ion-col>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6" class="graph">
+      <div class="card card-chart">
+        <div class="card-header card-header-success card-header-2">
+          <canvas #chart2 baseChart [datasets]="chartData2" [labels]="chartLabels2" [options]="chartOptions2"
+            [plugins]="chartPlugins2" [legend]="chartLegend2" [chartType]="chartType2">
+          </canvas>
+        </div>
+        <div class="card-body">
+          <ion-row no-margin no-padding justify-content-center align-items-end>
+            <ion-col size="5" no-margin no-padding>
+              <mat-form-field appearance="outline" class="mt">
+                <mat-label [class.fontStyle]="true">Select Period Type</mat-label>
+                <mat-select [(ngModel)]="selectedChart2PeriodValue">
+                  <mat-option (click)="selectedChart2Period(option)" *ngFor="let option of chartOptionToSelectPeriod"
+                    [value]="option">
+                    {{option}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="5" no-margin no-padding>
+              <mat-form-field appearance="outline">
+                <mat-label>Select Chart Type</mat-label>
+                <mat-select [(ngModel)]="selectedChart2Value">
+                  <mat-option (click)="selectedChart2(option)" *ngFor="let option of chartOptionToSelectDoubleData"
+                    [value]="option">
+                    {{option}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="footer">
+          <p class="text-left my-0" style="font-size: 16px;padding-top: 10px;">
+            Total indents vs successful indents for each month
+          </p>
+        </div>
+      </div>
+    </ion-col>
+
+  </ion-row>
+  <ion-row>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6" class="graph">
+      <div class="card card-chart">
+        <div class="card-header card-header-success card-header-2">
+          <canvas #chart3 baseChart [data]="chartData3" [colors]="myColor3" [labels]="chartLabels3" [options]="chartOptions3"
+            [plugins]="chartPlugins3" [legend]="chartLegend3" [chartType]="chartType3">
+          </canvas>
+        </div>
+        <div class="card-body">
+          <ion-row no-margin no-padding justify-content-center align-items-end>
+            <ion-col size="5" no-margin no-padding>
+              <mat-form-field appearance="outline">
+                <mat-label [class.fontStyle]="true">Select Period Type</mat-label>
+                <mat-select [(ngModel)]="selectedChart3PeriodValue">
+                  <mat-option (click)="selectedChart3Period(option)" *ngFor="let option of chartOptionToSelectPeriod"
+                    [value]="option">
+                    {{option}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="5" no-margin no-padding>
+              <mat-form-field appearance="outline">
+                <mat-label [class.fontStyle]="true">Select Chart Type</mat-label>
+                <mat-select [(ngModel)]="selectedChart3Value">
+                  <mat-option (click)="selectedChart3(option)" *ngFor="let option of chartOptionToSelectDoubleData"
+                    [value]="option">
+                    {{option}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="footer">
+          <p class="text-left my-0" style="font-size: 16px;padding-top: 10px;">
+            Total number of orders which are in open status for admin to act on
+          </p>
+        </div>
+      </div>
+    </ion-col>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6" class="graph">
+      <div class="card card-chart">
+        <div class="card-header card-header-success card-header-1">
+          <canvas #chart4 baseChart [data]="chartData4" [colors]="myColors4" [labels]="chartLabels4" [options]="chartOptions4"
+            [plugins]="chartPlugins4" [legend]="chartLegend4" [chartType]="chartType4">
+          </canvas>
+        </div>
+        <div class="card-body">
+          <ion-row no-margin no-padding justify-content-center align-items-end>
+            <ion-col size="4" no-margin no-padding>
+              <mat-form-field appearance="outline" style="padding-left: 15px;">
+                <mat-label [class.fontStyle]="true">Select Period Type</mat-label>
+                <mat-select [(ngModel)]="selectedChart4PeriodValue">
+                  <mat-option (click)="selectedChart4Period(option)" *ngFor="let option of chartOptionToSelectPeriod"
+                    [value]="option">
+                    {{option}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="4" no-margin no-padding>
+              <mat-form-field appearance="outline">
+                <mat-label [class.fontStyle]="true">Select Agency</mat-label>
+                <mat-select [(ngModel)]="selectedChart4AgencyValue">
+                  <mat-option (click)="selectedChart4Agency(option)" *ngFor="let option of chartOptionToSelectAgency"
+                    [value]="option">
+                    {{option}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-col>
+            <ion-col size="4" no-margin no-padding>
+              <mat-form-field appearance="outline">
+                <mat-label [class.fontStyle]="true">Select Chart Type</mat-label>
+                <mat-select [(ngModel)]="selectedChart4Value">
+                  <mat-option (click)="selectedChart4(option)" *ngFor="let option of chartOptionToSelectSingleData"
+                    [value]="option">
+                    {{option}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="footer">
+          <p class="text-left my-0" style="font-size: 16px;padding-top: 10px;">
+            Total number of Orders cancelled for a specified time
+          </p>
+        </div>
+      </div>
+    </ion-col>
+
+  </ion-row>
+</ion-content>
+
+
+
+
+
+<!-- <app-header>
+
+</app-header>
+
+<ion-content>
+
+  <ion-row>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-text class=" fw700 font-md" color="dark" style="padding-left: 5px;">Dashboard page</ion-text>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <form novalidate [formGroup]="selectuserForm">
+        <ion-row class="form-content-labels">
+          <ion-col size="2">
+            Select User
+          </ion-col>
+          <ion-col size="4">
+            <ng-multiselect-dropdown name="selectuseraccess" [data]="useraccess" [(ngModel)]="selectuseraccess"
+              [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" formControlName="selectuseraccess">
+            </ng-multiselect-dropdown>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-col>
+
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <form novalidate [formGroup]="selectuserForm">
+        <ion-row class="form-content-labels">
+          <ion-col size="2">
+            Select Role
+          </ion-col>
+          <ion-col size="4">
+            <ng-multiselect-dropdown name="selectpermissionaccess" [data]="Permissions"
+              [(ngModel)]="selectpermissionaccess" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+              formControlName="selectpermissionaccess">
+            </ng-multiselect-dropdown>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-card>
+        <b (click)="expand('graph1')" style="font-size: 16px; cursor: pointer">Total Order Amount vs
+          Month-Graph</b>
+        <div *ngIf="toggleGraph1" echarts [(options)]="chartOption" class="demo-chart"></div>
+      </ion-card>
+    </ion-col>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-card>
+        <b (click)="expand('graph2')" style="font-size: 16px; cursor: pointer">Total Order Amount vs Agency For The
+          Year- Pie Chart</b>
+        <div *ngIf="toggleGraph2" echarts [(options)]="option" class="demo-chart"></div>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-card>
+        <b (click)="expand('graph3')" style="font-size: 16px; cursor: pointer">Total Order Amount Per Month vs Field
+          Agent - Agency Wise
+          - Bar Chart</b>
+        <div *ngIf="toggleGraph3" echarts [(options)]="options" class="demo-chart"></div>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-card>
+        <b (click)="expand('graph4')" style="font-size: 16px; cursor: pointer">Total Order Amount Per Month Based on
+          Product Category</b>
+        <div *ngIf="toggleGraph4" echarts [(options)]="option1" class="demo-chart"></div>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-card>
+        <b (click)="expand('graph5')" style="font-size: 16px; cursor: pointer">Total Order Amount of field agents for
+          the year</b>
+        <div *ngIf="toggleGraph5" echarts [(options)]="option2" class="demo-chart"></div>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-card>
+        <b (click)="expand('graph6')" style="font-size: 16px; cursor: pointer">Total Indents vs Successful indents
+          (Orders) for each month</b>
+        <div *ngIf="toggleGraph6" echarts [(options)]="option3" class="demo-chart"></div>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-card>
+        <b (click)="expand('graph7')" style="font-size: 16px; cursor: pointer">Total Order Amount as per the place</b>
+        <div *ngIf="toggleGraph7" echarts [(options)]="option4" class="demo-chart"></div>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-card>
+        <b (click)="expand('graph8')" style="font-size: 16px; cursor: pointer">Products and Quantity Demand for the
+          Orders in Created status(Based on Category - different charts)</b>
+        <div *ngIf="toggleGraph8" echarts [(options)]="option5" class="demo-chart"></div>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-card>
+        <b (click)="expand('graph9')" style="font-size: 16px; cursor: pointer">Orders placed based on Company and their
+          Product</b>
+        <div *ngIf="toggleGraph9" echarts [(options)]="option6" class="demo-chart"></div>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-card>
+        <b (click)="expand('graph10')" style="font-size: 16px; cursor: pointer">Open Orders for the Admin to act on
+          (statuses)</b>
+        <div *ngIf="toggleGraph10" echarts [(options)]="option7" class="demo-chart"></div>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+      <ion-card>
+        <b (click)="expand('graph11')" style="font-size: 16px; cursor: pointer">Orders cancelled for a specified time
+          (based on Agency)</b>
+        <div *ngIf="toggleGraph11" echarts [(options)]="option8" class="demo-chart"></div>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content> -->

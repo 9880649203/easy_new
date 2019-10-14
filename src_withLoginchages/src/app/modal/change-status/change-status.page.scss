@@ -1,0 +1,161 @@
+
+  .error {
+    color: rgb(223, 62, 62);
+    font-size: 11px;
+  }
+  .error1 {
+    color: rgb(75, 75, 75);
+    border-bottom: 1px solid #ff0000;
+  }
+
+  .my-label {
+     font-size: 13px !important;
+  }
+  .no-padding {
+    padding: 0px !important;
+  }
+  ::ng-deep .dropdown-list {
+    position: absolute !important;
+  }
+.theme-green .bs-datepicker-head {
+  background-color: #347587!important;
+}
+  .round {
+    --border-radius: 0%;
+    --vertical-align: middle;
+    --padding-start: 10px;
+    --padding-end: 10px;
+    height: 2.1em !important;
+  }
+  .text-list {
+    font-weight: 500;
+    font-size: 14px;
+     line-height: 2rem;
+  }
+  .text-list-m{
+    width: 40%;
+  }
+  .form-control{
+    width: 100% !important;
+    // font-size:12px !important;
+    padding-top: 13px !important;
+
+  }
+  #btn_left, #btn_right, #text{
+    display:inline-block;
+}
+#btn_right{
+    float:right;
+}
+.col-form-label {
+    font-weight: 500;
+    font-size: 14px;
+}
+.labels_font{
+    font-weight: 500;
+    font-size: 14px;
+}
+.col-form-label::after{
+  content :' *';
+  color:red;
+}
+
+//radio button css
+.radiotextsty {
+  color: #252829;
+  font-size: 12px;
+}
+
+.customradio {
+  display: block;
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 0px;
+  cursor: pointer;
+  font-size: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.customradio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 14px;
+  width: 14px;
+  background-color: white;
+  border-radius: 50%;
+  border:1px solid #BEBEBE;
+}
+
+/* On mouse-over, add a grey background color */
+.customradio:hover input ~ .checkmark {
+  background-color: transparent;
+}
+
+/* When the radio button is checked, add a blue background */
+.customradio input:checked ~ .checkmark {
+  background-color: white;
+  border:1px solid #BEBEBE;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.customradio input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.customradio .checkmark:after {
+  top: 2px;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #057b82;
+}
+
+//datepicker css
+/* remove border between controls */
+.add-on .input-group-btn > .btn {
+  border-left-width: 0;
+  left:-2px;
+  margin-top: -27px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+/* stop the glowing blue shadow */
+.add-on .form-control:focus {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border-color:#cccccc;
+}
+
+.theme-dark-blue .bs-datepicker-head {
+  background-color: #38ad4e !important;
+}
+
+.form-control {
+  font-size: 13px !important;
+}
+::ng-deep .theme-dark-blue .bs-datepicker-head {
+  background-color: #5cb85c !important;
+}
+ng-deep .table .thead-dark th {
+  color: #fff;
+  background-color: #036479 !important;
+  border-color: #036479 !important;
+}

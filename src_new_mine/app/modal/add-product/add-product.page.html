@@ -1,0 +1,531 @@
+<ion-header>
+  <ion-toolbar color="primary" style="color:white">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="11" top class="text-middle">
+          <ion-title *ngIf='modalType=="editProduct"' [class.useFont]="true" no-margin no-padding
+            style="text-align: left;margin-left:8px"> Edit Product</ion-title>
+          <ion-title *ngIf='modalType=="addProduct"' [class.useFont]="true" no-margin no-padding
+            style=" text-align: left;margin-left:8px">Add Product</ion-title>
+          <ion-title *ngIf='modalType=="viewProduct"' [class.useFont]="true" no-margin no-padding
+            style=" text-align: left;margin-left:8px">View Product</ion-title>
+        </ion-col>
+        <ion-col size="1" style="text-align: end;">
+          <ion-icon style="font-size: 25px;cursor: pointer;color: #036479;" name="close" (click)="closeModal()">
+          </ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content no-padding>
+  <ion-grid>
+    <ion-row *ngIf='modalType=="editProduct"' style="height:100%;padding:20px">
+      <ion-col col-12 col-md-12 col-lg-4 col-xl-3 style="height:100%">
+        <form novalidate [formGroup]="newProductForm" style="height:100%">
+          <div class="form-group row">
+            <label for="category" class="col-4 labels_font">Category</label>
+            <div class="col-8">
+
+              <ng-multiselect-dropdown id="category" [placeholder]="'Select category'" [data]="CategoryName"
+                [(ngModel)]="productData.category_name" formControlName='category_name' [settings]="categorySettings"
+                (onSelect)="onCategorySelect($event)" [disabled]="diabledCat"
+                [class.error2]="!newProductForm.controls.category_name.valid && newProductForm.controls.category_name.dirty">
+              </ng-multiselect-dropdown>
+              <div *ngIf="(newProductForm.get('category_name').hasError('required') )  
+                && newProductForm.get('category_name').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('category_name').hasError('required') && newProductForm.get('category_name').touched">
+                  please enter Category name
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="example-text-input" class="col-4 labels_font">Product Id</label>
+            <div class="col-8">
+              <input type="text" placeholder="Product Id" [(ngModel)]="productData.product_id" class="form-control"
+                disabled formControlName="product_id"
+                [class.error1]="!newProductForm.controls.product_id.valid && newProductForm.controls.product_id.dirty" />
+
+              <div no-lines
+                *ngIf="(newProductForm.get('product_id').hasError('required') ) && newProductForm.get('product_id').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('product_id').hasError('required') && newProductForm.get('product_id').touched">
+                  please enter product id
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="product" class="col-4 col-form-label">Product Name</label>
+            <div class="col-8">
+              <input type="text" id="product" placeholder="Product" [(ngModel)]="productData.product_name"
+                formControlName="product_name" class="form-control"
+                (keyup)="trimValue(this.newProductForm.get('product_name'))"
+                [class.error1]="!newProductForm.controls.product_name.valid && newProductForm.controls.product_name.dirty">
+
+              <div *ngIf="(newProductForm.get('product_name').hasError('required') ) || newProductForm.get('product_name').hasError('pattern') || newProductForm.get('product_name').hasError('minlength') 
+                && newProductForm.get('company_name').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('product_name').hasError('required') && newProductForm.get('product_name').touched">
+                  please enter Product name
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('product_name').hasError('pattern') && newProductForm.get('product_name').touched">
+                  Only use alphabet characters
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('product_name').hasError('minlength') && newProductForm.get('product_name').touched">
+                  Minimum 4 characters
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('product_name').hasError('maxlength') && newProductForm.get('product_name').touched">
+                  Maximum 30 characters
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="Company" class="col-4 col-form-label">Company Name</label>
+            <div class="col-8">
+              <input type="text"  id="Company" placeholder="Company" [(ngModel)]="productData.company_name"
+                formControlName="company_name" class="form-control"
+                (keyup)="trimValue(this.newProductForm.get('company_name'))"
+                [class.error1]="!newProductForm.controls.company_name.valid && newProductForm.controls.company_name.dirty">
+
+              <div
+                *ngIf="(newProductForm.get('company_name').hasError('required') ) || newProductForm.get('company_name').hasError('pattern') || newProductForm.get('company_name').hasError('minlength') && newProductForm.get('company_name').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('company_name').hasError('required') && newProductForm.get('company_name').touched">
+                  please enter company name
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('company_name').hasError('pattern') && newProductForm.get('company_name').touched">
+                  only use alphabet characters
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('company_name').hasError('minlength') && newProductForm.get('company_name').touched">
+                  minimum 4 characters
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('company_name').hasError('maxlength') && newProductForm.get('company_name').touched">
+                  maximum 30 characters
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="brand" disabled class="col-4 col-form-label">Brand Name</label>
+            <div class="col-8">
+              <input type="text" id="brand" placeholder="Brand" [(ngModel)]="productData.brand_name" formControlName="brand_name"
+                class="form-control" (keyup)="trimValue(this.newProductForm.get('brand_name'))"
+                [class.error1]="!newProductForm.controls.brand_name.valid && newProductForm.controls.brand_name.dirty">
+              <div *ngIf="(newProductForm.get('brand_name').hasError('required') ) || newProductForm.get('brand_name').hasError('pattern') ||
+               newProductForm.get('brand_name').hasError('minlength') 
+              && newProductForm.get('brand_name').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('brand_name').hasError('required') && newProductForm.get('brand_name').touched">
+                  please enter brand name
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('brand_name').hasError('pattern') && newProductForm.get('brand_name').touched">
+                  only use alphabet characters
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('brand_name').hasError('minlength') && newProductForm.get('brand_name').touched">
+                  minimum 4 characters
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('brand_name').hasError('maxlength') && newProductForm.get('brand_name').touched">
+                  maximum 30 characters
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="units" class="col-4 col-form-label">Unit</label>
+            <div class="col-8">
+
+              <ng-multiselect-dropdown  id="units" [placeholder]="'Select Unit'" [data]="UnitData" [(ngModel)]="productData.unit"
+                formControlName='Unit' [settings]="unitSettings " (onSelect)="onUnitSelect($event)"
+                [class.error2]="!newProductForm.controls.Unit.valid && newProductForm.controls.Unit.dirty">
+              </ng-multiselect-dropdown>
+              <div no-lines
+                *ngIf="(newProductForm.get('Unit').hasError('required') ) && newProductForm.get('Unit').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('Unit').hasError('required') && newProductForm.get('Unit').touched">
+                  please select unit
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="mrp" class="col-4 labels_font "
+              (keyup)="trimValue(this.newProductForm.get('mrp'))">Price</label>
+            <div class="col-8">
+              <input type="number" id="mrp" min="0" placeholder="Price" (ngModelChange)="onChange($event)"
+                [(ngModel)]="productData.mrp" formControlName="mrp" class="form-control">
+              <div class="error">
+                <span *ngIf="negativityEditCheck" class="has-danger">Negative Value is not allowed </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="quantity" class="col-4 labels_font"
+              (keyup)="trimValue(this.newProductForm.get('quantity'))">Quantity</label>
+            <div class="col-8">
+              <input type="number" id="quantity" min="0" placeholder="Enter Quantity" (ngModelChange)="onchanging($event)"
+                [(ngModel)]="productData.quantity" formControlName="quantity" class="form-control">
+              <div class="error">
+                <span *ngIf="negativityCheckQuantity" class="has-danger">Negative Value is not allowed </span>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label for="example-search-input" class="col-4 labels_font">Availability</label>
+            <div class="col-8">
+              <div class="form-check-inline">
+                <label class="customradio">
+                  <span class="radiotextsty">Yes &nbsp; </span>
+                  <input type="radio" value="Y" formControlName="availability"
+                    [(ngModel)]="productData.availability" />&nbsp;
+                  <span class="checkmark"></span>
+                </label> &nbsp;
+                <label class="customradio">
+                  <span class="radiotextsty">No </span>
+                  <input type="radio" value="N" formControlName="availability"
+                    [(ngModel)]='productData.availability' />&nbsp;
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="form-group row">
+            <label for="example-search-input" class="col-4 col-form-label">Status</label>
+            <div class="col-8">
+              <div class="form-check-inline">
+                <label class="customradio">
+                  <span class="radiotextsty">Active &nbsp;</span>
+                  <input type="radio" value="Active" formControlName="status" required
+                    [(ngModel)]="productData.status" />
+                  &nbsp;
+                  <span class="checkmark"></span>
+                </label>
+                <label class="customradio">
+                  <span class="radiotextsty"> Inactive</span>
+                  <input type="radio" value="Inactive" formControlName="status" required
+                    [(ngModel)]='productData.status' />
+                  <span class="checkmark"></span>
+                </label>
+                <div no-lines
+                  *ngIf="(newProductForm.get('status').hasError('required') ) && newProductForm.get('status').touched">
+                  <div class="error"
+                    *ngIf="newProductForm.get('status').hasError('required') && newProductForm.get('status').touched">
+                    please select Status
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group has-feedback row">
+            <label for="example-search-input" class="col-4 labels_font ">Expiry Date</label>
+            <div class="col-8" style="position:relative">
+
+              <input id="dateOfBirth" class="bs-media-container" placeholder="Date " name="dateOfBirth"
+                [(ngModel)]="productData.expiry_date"
+                [minDate]="tomorrow" formControlName="expiry" type="text" [bsConfig]="datePickerConfig" bsDatepicker
+                class="form-control date datepicker" placement="top" autocomplete="off" class="form-control">
+            </div>
+          </div>
+
+
+
+          <ion-button class="text-list " color="primary" [disabled]="newProductForm.invalid"
+            style=" font-size: 11px; font-weight: 100;float: right" (click)="productUpdate()">
+            CONFIRM</ion-button>
+
+          <ion-button class="text-list" color="primary" style=" font-size: 11px; font-weight: 100;float: right"
+            (click)="closeModal()">
+            CANCEL</ion-button>
+
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+  <ion-grid>
+    <ion-row *ngIf='modalType=="addProduct"' style="height:100%;padding:10px">
+      <ion-col col-12 col-md-12 col-lg-4 col-xl-3 style="height:100%">
+        <form novalidate [formGroup]="newProductForm" style="height:100%">
+
+          <div class="form-group row">
+            <label  for="categoryName" class="col-4 col-form-label">Category</label>
+            <div class="col-8">
+              <ng-multiselect-dropdown id="categoryName" [placeholder]="'Select category'" [data]="CategoryName"
+                [(ngModel)]="selectedCity" formControlName='category_name' [settings]="categorySettings"
+                (onSelect)="onCategorySelect($event)"
+                [class.error2]="!newProductForm.controls.category_name.valid && newProductForm.controls.category_name.dirty">
+              </ng-multiselect-dropdown>
+
+              <div
+                *ngIf="(newProductForm.get('category_name').hasError('required') ) && newProductForm.get('category_name').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('category_name').hasError('required') && newProductForm.get('category_name').touched">
+                  Please Enter Category name
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label for="productname" class="col-4 col-form-label">Product Name</label>
+            <div class="col-8">
+              <input type="text" id="productname " placeholder="Product" [(ngModel)]="productInform.product_name" required
+                formControlName="product_name" class="form-control"
+                (keyup)="trimValue(this.newProductForm.get('product_name'))"
+                [class.error1]="!newProductForm.controls.product_name.valid && newProductForm.controls.product_name.dirty">
+
+
+
+              <div
+                *ngIf="(newProductForm.get('product_name').hasError('required') || newProductForm.get('product_name').hasError('pattern') || newProductForm.get('product_name').hasError('minlength') 
+              || newProductForm.get('product_name').hasError('maxlength') ) && newProductForm.get('product_name').touched ">
+                <div class="error"
+                  *ngIf="(newProductForm.get('product_name').hasError('required') )&& newProductForm.get('product_name').touched">
+                  product name is empty
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('product_name').hasError('minlength') && newProductForm.get('product_name').touched">
+                  minimum 4 characters
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('product_name').hasError('maxlength') && newProductForm.get('product_name').touched">
+                  maximum 30 characters
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('product_name').hasError('pattern') && newProductForm.get('product_name').touched">
+                  only use alphabet characters
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label for="Company" class="col-4 col-form-label">Company Name</label>
+            <div class="col-8">
+              <input type="text" id="Company" placeholder="Company" (keyup)="trimValue(this.newProductForm.get('company_name'))"
+                [(ngModel)]="productInform.company_name" formControlName="company_name" class="form-control"
+                [class.error1]="!newProductForm.controls.company_name.valid && newProductForm.controls.company_name.dirty">
+
+              <div
+                *ngIf="(newProductForm.get('company_name').hasError('required') ) || newProductForm.get('company_name').hasError('pattern') || newProductForm.get('company_name').hasError('minlength') && newProductForm.get('company_name').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('company_name').hasError('required') && newProductForm.get('company_name').touched">
+                  please enter company name
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('company_name').hasError('pattern') && newProductForm.get('company_name').touched">
+                  only use alphabet characters
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('company_name').hasError('minlength') && newProductForm.get('company_name').touched">
+                  minimum 4 characters
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('company_name').hasError('maxlength') && newProductForm.get('company_name').touched">
+                  maximum 30 characters
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="brand" class="col-4 col-form-label">Brand Name</label>
+            <div class="col-8">
+              <input type="text"  id="brand" placeholder="Brand" (keyup)="trimValue(this.newProductForm.get('brand_name'))"
+                [(ngModel)]="productInform.Brand_name" formControlName="brand_name" class="form-control"
+                [class.error1]="!newProductForm.controls.brand_name.valid && newProductForm.controls.brand_name.dirty">
+              <div *ngIf="(newProductForm.get('brand_name').hasError('required') ) || newProductForm.get('brand_name').hasError('pattern') || newProductForm.get('brand_name').hasError('minlength') 
+                && newProductForm.get('brand_name').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('brand_name').hasError('required') && newProductForm.get('brand_name').touched">
+                  please enter Brand name
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('brand_name').hasError('pattern') && newProductForm.get('brand_name').touched">
+                  only use alphabet characters
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('brand_name').hasError('minlength') && newProductForm.get('brand_name').touched">
+                  minimum 4 characters
+                </div>
+                <div class="error"
+                  *ngIf="newProductForm.get('brand_name').hasError('maxlength') && newProductForm.get('brand_name').touched">
+                  maximum 30 characters
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="unit" class="col-4 col-form-label">Unit</label>
+            <div class="col-8">
+              <ng-multiselect-dropdown  id="unit"  [placeholder]="'Select Unit'" [data]="UnitData" [(ngModel)]="productInform.Unit"
+                formControlName='Unit' [settings]="unitSettings " (onSelect)="onUnitSelect($event)"
+                [class.error2]="!newProductForm.controls.Unit.valid && newProductForm.controls.Unit.dirty">
+              </ng-multiselect-dropdown>
+              <div no-lines
+                *ngIf="(newProductForm.get('Unit').hasError('required') ) && newProductForm.get('Unit').touched">
+                <div class="error"
+                  *ngIf="newProductForm.get('Unit').hasError('required') && newProductForm.get('Unit').touched">
+                  Please Enter unit
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="price" class="col-4 labels_font ">Price</label>
+            <div class="col-8">
+              <input type="number" name="price" id="price" (keyup)="trimValue(this.newProductForm.get('mrp'))"
+                (ngModelChange)="onChange($event)" min="0" placeholder="Price" [(ngModel)]="productInform.mrp"
+                formControlName="mrp" class="form-control">
+              <div class="error">
+                <span *ngIf="negativityEditCheck" class="has-danger">Negative Value is not allowed </span>
+              </div>
+
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="Quantity" class="col-4 labels_font">Quantity</label>
+            <div class="col-8">
+              <input type="number" id="Quantity" min="0" [value]="searchValue" placeholder="Quantity"
+                (keyup)="trimValue(this.newProductForm.get('quantity'))" [(ngModel)]="productInform.quantity"
+                formControlName="quantity" class="form-control"
+                [class.error1]="!newProductForm.controls.quantity.valid && newProductForm.controls.quantity.dirty">
+              <div class="error">
+                <span *ngIf="negativityCheck" class="has-danger">Negative Value is not allowed </span>
+              </div>
+            </div>
+
+          </div>
+          <div class="form-group row">
+            <label for="example-search-input" class="col-4 labels_font">Availability</label>
+            <div class="col-8">
+              <div class="form-check-inline">
+                <label class="customradio">
+                  <span class="radiotextsty">Yes &nbsp;</span>
+                  <input type="radio" value="Y" formControlName="availability"
+                    [(ngModel)]="productInform.availability" />
+                  <span class="checkmark"></span>
+                </label>
+                <label class="customradio">
+                  <span class="radiotextsty"> No</span>
+                  <input type="radio" value="N" formControlName="availability"
+                    [(ngModel)]='productInform.availability' />
+                  <span class="checkmark"></span>
+                </label>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group has-feedback row">
+            <label for="example-search-input" class="col-4 labels_font ">Expiry Date</label>
+            <div class="col-8" style="position:relative">
+
+              <input id="dateOfBirth" class="bs-media-container" placeholder="Date " name="dateOfBirth"
+                [(ngModel)]="productInform.expiry" value="{{ productInform.expiry | date: 'dd/MM/yyyy' }}"
+                [minDate]="tomorrow" formControlName="expiry" type="text" [bsConfig]="datePickerConfig" bsDatepicker
+                class="form-control date datepicker" placement="top" autocomplete="off" class="form-control">
+            </div>
+          </div>
+
+
+
+
+
+          <ion-button class="text-list " style=" font-size: 11px; font-weight: 100;float: right" color="primary"
+            [disabled]="newProductForm.invalid" (click)="productCreate()">
+            ADD</ion-button>&nbsp;
+          <ion-button class="text-list" color="primary" style=" font-size: 11px; font-weight: 100;float: right"
+            (click)="closeModal()">
+            CANCEL</ion-button>
+
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+  <ion-row *ngIf='modalType=="viewProduct"' style="height:100%;">
+
+    <div class="col-12 ">
+      <ion-item class="text-list">
+        <p class="text-list-m"> Product Id:</p> {{list.product_id}}
+      </ion-item>
+      <ion-item class="text-list">
+        <p class="text-list-m"> Product name :</p> {{list.product_name}}
+      </ion-item>
+      <ion-item class="text-list">
+        <p class="text-list-m"> Category Name:</p> {{list.category_name}}
+      </ion-item>
+      <ion-item class="text-list">
+        <p class="text-list-m"> Company name :</p> {{list.company_name}}
+      </ion-item>
+      <ion-item class="text-list">
+        <p class="text-list-m"> Brand :</p> {{list.brand_name}}
+      </ion-item>
+      <ion-item class="text-list">
+        <p class="text-list-m"> Unit :</p> {{list.unit}}
+      </ion-item>
+      <ion-item class="text-list">
+        <p class="text-list-m"> Quantity :</p> {{list.quantity}}
+      </ion-item>
+      <ion-item class="text-list">
+        <p class="text-list-m"> Price :</p> {{list.mrp}}
+      </ion-item>
+      <ion-item class="text-list">
+        <p class="text-list-m"> Availability:</p> {{list.availability}}
+      </ion-item>
+      <ion-item class="text-list">
+        <p class="text-list-m"> Expiry Date:</p> {{ list.expiry_date }}
+      </ion-item>
+
+
+      <ion-item class="text-list">
+        <p class="text-list-m"> Status:</p> {{list.status}}
+      </ion-item>
+      <br />
+
+
+      <ion-button class="text-list " style=" font-size: 11px; font-weight: 100;float: right" color="primary"
+        (click)="closeModal()">
+        cancel</ion-button>
+
+    </div>
+  </ion-row>
+</ion-content>

@@ -1,0 +1,119 @@
+  .text-list {
+    font-size: 14PX;
+    // line-height: 2rem;
+  }
+  // .error {
+  //   color: rgb(223, 62, 62);
+  //   font-size: 11px;
+  // }
+  // .error1 {
+  //   color: rgb(75, 75, 75);
+  //   border-bottom: 1px solid #ff0000;
+  // }
+
+  .minheight{
+    --min-height: none;
+  }
+
+  .top{
+    top: 54.5px;
+  }
+
+
+  .form-content-labels {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2.5;
+    letter-spacing: normal;
+    text-align: left;
+    color: #4d4e4e;
+    color: var(--Black);
+  }
+  .form-required-Field {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.38;
+    letter-spacing: normal;
+    text-align: left;
+    color: #4d4e4e;
+    color: var(--Black);
+  }
+  input{
+    font-size: 13px;
+    height: 30px;
+  }
+
+  h1 {
+    white-space: nowrap;
+    width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    line-height: 40px;
+    pointer-events:none;
+  }
+
+  h1:after {
+    content:"";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 48px;
+    z-index: 1;
+    pointer-events:initial;
+  }
+
+  h1:hover:after{
+    cursor: pointer;
+  }
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+  .tooltip {
+    word-wrap: break-word;
+    width: 60%;
+    visibility: hidden;
+    background-color: #fff;
+    padding: 20px;
+    -webkit-box-shadow: 0 0 50px 0 rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+
+  div:hover + .tooltip {
+    visibility: visible;
+    transition: opacity 0.5s ease;
+    opacity: 1;
+  }
+
+
+  .displayIonrow{
+    display:none !important
+  }
+
+  .form-content-labels {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2.5;
+    letter-spacing: normal;
+    text-align: left;
+    color: #4d4e4e;
+    color: var(--Black);
+  }
+
+  .col-form-label::after{
+    content :' *';
+    color:red;
+  }

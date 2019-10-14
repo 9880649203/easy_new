@@ -1,0 +1,19 @@
+.ion-list {
+    &.list-ios {
+        margin-bottom: 0;
+    }
+}
+::ng-deep .popover-content.sc-ion-popover-md {
+    top: 60px !important;
+    left: unset !important;
+    right:1% !important;
+    background: #079497;
+}
+.onHover{
+    color: white;
+}
+.onHover:hover{
+    color: rgb(215, 222, 223) !important;
+    text-decoration: underline;
+    cursor: pointer;
+}

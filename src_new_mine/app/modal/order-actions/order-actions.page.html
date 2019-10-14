@@ -1,0 +1,62 @@
+<!-- <div class="row ml-2 document-actions" style="display:inline-flex;position: absolute;">
+    <div *ngIf="roleBaseAccesService.access_checking('acceptOrder') || roleBaseAccesService.access_checking('cancelOrder') || roleBaseAccesService.access_checking('completeOrders')">
+        <fieldset>
+            <input type="checkbox" (click)="pushedOrderId(mainParams, $event)" 
+            [attr.disabled]="mainParams.data.order_status == 'completed' ? '' : null"
+            [title]="'current status '+mainParams.data.order_status" />  
+        </fieldset>      
+    </div>
+    <div *ngIf="mainParams.editOrder">
+        <fieldset *ngIf="roleBaseAccesService.access_checking('createModifyOrder')" (click)="openEditrole(mainParams,'edit')" title='Edit' class="icon">
+             <ion-icon name="create"></ion-icon>
+        </fieldset>
+
+      
+
+    </div>
+    
+    <div *ngIf="mainParams.viewOrder" class="icon">
+        <fieldset title="View" *ngIf="roleBaseAccesService.access_checking('viewOrderPage')" (click)="openEditrole(mainParams,'view');">
+            <ion-icon name="eye"></ion-icon>
+        </fieldset>
+        <fieldset *ngIf="!roleBaseAccesService.access_checking('viewOrderPage')" title="Unauthorized">
+                <ion-icon name="eye"></ion-icon>
+        </fieldset>
+    </div>
+</div> -->
+
+
+<div class="row ml-2 document-actions" style="display:inline-flex;position: absolute;">
+    <div *ngIf="roleService.acceptStatusOrder || roleService.cancelStatusOrder">
+        <fieldset>
+            <input type="checkbox" (click)="pushedOrderId(mainParams, $event)"
+                [attr.disabled]="mainParams.data.order_status == 'completed' ? '' : null"
+                [title]="'current status '+mainParams.data.order_status" />
+        </fieldset>
+    </div>
+    <div *ngIf="mainParams.editOrder">
+        <fieldset *ngIf="roleService.editOrder" (click)="openEditrole(mainParams,'edit')" title='Edit' class="icon">
+            <ion-icon name="create"></ion-icon>
+        </fieldset>
+
+        <!-- <fieldset *ngIf="!roleBaseAccesService.access_checking('createModifyOrder')" title='Unauthorized' class="icon">
+            <ion-icon name="create"></ion-icon>
+        </fieldset> -->
+
+    </div>
+
+    <div  class="icon"> 
+        <fieldset *ngIf="roleService.acceptStatusOrder" title="Change Status" (click)="acceptCancelOrder(mainParams)">
+            <ion-icon name="create"></ion-icon>
+        </fieldset>      
+    </div>
+
+    <div *ngIf="mainParams.viewOrder" class="icon">
+        <fieldset title="View" (click)="openEditrole(mainParams,'view');">
+            <ion-icon name="eye"></ion-icon>
+        </fieldset>
+        <!-- <fieldset title="Unauthorized">
+            <ion-icon name="eye"></ion-icon>
+        </fieldset> -->
+    </div>
+</div>
